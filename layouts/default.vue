@@ -1,8 +1,5 @@
 <template>
     <v-app :class="['!bg-fixed !bg-no-repeat !bg-center !bg-cover', bgImg]">
-
-
-
         <CustomDialog :opened="prize" width="700" @close="prize = false" decorated-text="Congratulations!"
             message="You have found an Easter egg on our website! We are so glad you took the time to explore our site and discover this hidden gem.As a reward for your sharp eyes, we are offering you a special discount on your next trip booking.Simply use the code EASTEREGG at checkout to save 10 % on your trip.We hope you enjoy your next trip with us! Sincerely, Ladies Only Events Organization"
             transition="scale" />

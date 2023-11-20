@@ -44,7 +44,7 @@
                             message="Please specify number of people for whom you want to book!" :persistent="true"
                             title="Are you booking for" transition="scale" decorated-text="GHOSTS?" />
                         <BookingDetails :event="event" :opened="TripDialog" @close="closed => TripDialog = closed"
-                            :counter="counter" @update="newCounter => counter = newCounter" />
+                            :counter="counter" @update="newCounter => counter += newCounter" />
                         <CustomSnackBar @update="closeSnackbar()" :opened="snackbar" color="red-darken-1"
                             @close="endTimer()" title="Login first!" message="Please login first before booking a trip!" />
                         <v-btn @click="counter > 0 ? auth() : openErrorDialog = true" variant="outlined" id="activator"
