@@ -13,6 +13,14 @@ export default defineNuxtConfig({
   app: {
     head: {
       link: [{ rel: 'icon', href: '/LOEClipped.png' }]
+    },
+    pageTransition: {
+      name: 'page',
+      mode: 'out-in'
+    },
+    layoutTransition: {
+      name: 'slide-left',
+      mode: 'out-in' // default
     }
   },
   build: {

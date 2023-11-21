@@ -4,18 +4,10 @@ import '@/src/styles/settings.scss'
 
 import { createVuetify } from 'vuetify'
 
-const customdark = {
-    dark: true,
-    colors: {
-        'pink-lighten-3': '#d8819a'
-    },
-}
-
 export default defineNuxtPlugin((app) => {
     const vuetify = createVuetify({
         // ... your configuration
         theme: {
-
             themes: {
                 light: {
                     dark: false,
@@ -28,7 +20,8 @@ export default defineNuxtPlugin((app) => {
                     dark: true,
                     colors: {
                         'pink-accent-1': '#757575',
-                        'pink-lighten-1': '#424242'
+                        'pink-lighten-1': '#424242',
+                        'error': '#b80000'
                     }
                 }
             }

@@ -12,14 +12,15 @@
                 <slot name="options">
                 </slot>
             </div>
-            <div class="d-flex gap-x-2">
+            <div class="d-flex flex-wrap gap-x-2">
+
+                <v-text-field class="pt-2" v-model="person.name"
+                    :rules='[(name) => name.match(/^[a-zA-Z_ ]|^[\u0621-\u064A\u0660-\u0669 ]*$/g) ? true : "Enter a proper name!"]'
+                    variant="outlined" :label="`${label} name`" />
+                <v-text-field class="pt-2 max-w-[15rem]" v-model="person.age" variant="outlined"
+                    :rules='[(age) => age.match(/^[0-9]*$/g) ? (age < 9 ? `Min age is ${9}!` : (age < 1 ? "Invalid Age!" : age = parseInt(age), true)) : "Numeric value required!"]'
+                    :label="`${label} age`" />
                 <slot>
-                    <v-text-field class="pt-2 w-[calc(100%-10rem)]" v-model="person.name"
-                        :rules='[(name) => name.match(/^[a-zA-Z_ ]|^[\u0621-\u064A\u0660-\u0669 ]*$/g) ? true : "Enter a proper name!"]'
-                        variant="outlined" :label="`${label} name`" />
-                    <v-text-field class="pt-2" v-model="person.age" variant="outlined"
-                        :rules='[(age) => age.match(/^[0-9]*$/g) ? (age < 9 ? `Min age is ${9}!` : (age < 1 ? "Invalid Age!" : age = parseInt(age), true)) : "Numeric value required!"]'
-                        :label="`${label} age`" />
                 </slot>
             </div>
         </v-list-item>

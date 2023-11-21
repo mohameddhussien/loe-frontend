@@ -1,6 +1,6 @@
 
 <template>
-  <v-container>
+  <v-container fluid>
     <SpecialTextDesign data-aos="zoom-in" data-aos-duration="1000" class="text-5xl text-center ma-5" before="Just"
       to-be-decorated="Announced!" color="before:bg-crayota-200" />
     <v-row no-gutters>
@@ -19,8 +19,6 @@
         </v-card>
       </v-col>
     </v-row>
-  </v-container>
-  <v-container data-aos="fade-up" fluid>
     <v-row justify="center" class="flex flex-col bg-white">
       <SpecialTextDesign data-aos="zoom-in" data-aos-duration="1000" class="text-5xl pt-5 text-center bg-white"
         before="Comming" to-be-decorated="Soon!" color="before:bg-crayota-200" />
@@ -47,11 +45,6 @@
           </v-carousel-item>
         </v-carousel>
       </v-col>
-    </v-row>
-  </v-container>
-  <v-container>
-    <v-row>
-
     </v-row>
   </v-container>
 </template>

@@ -25,7 +25,7 @@
                     color="before:border-y-2 pa-3 mb-8 before:-skew-x-[82deg] text-4xl my-5" />
             </v-row>
             <v-row class="mx-2 gap-x-5">
-                <span class="text-xl font-sans">People</span>
+                <SpecialTextDesign to-be-decorated="People" />
                 <SpecialTextDesign :to-be-decorated="counter.toString()" color="before:bg-[rgba(255,255,255,0.3)]" />
                 <div class="gap-x-1 d-flex ml-auto">
                     <v-btn @click="AddAdult()" :disabled="disable" variant="outlined" icon="mdi-menu-up-outline"
@@ -34,7 +34,7 @@
                         size="x-small" />
                 </div>
             </v-row>
-            <v-row>
+            <v-row class="gap-y-3">
                 <v-col cols="12" v-for="( adult, adult_index ) in  Adults.details" :key="adult_index">
                     <PersonDetails :person="adult" :index="adult_index" label="Adult">
                         <template #options>
@@ -46,27 +46,43 @@
                                 v-model="adult.child" style="width: fit-content;" />
                         </template>
                         <template #remove>
-                            <v-btn class="ml-auto hover:text-red-700" size="small" prepend-icon="mdi-close" variant="tonal"
-                                @click="removeAdult(adult, adult_index)">Remove</v-btn>
+                            <v-hover>
+                                <template #default="{ isHovering, props }">
+                                    <v-btn v-bind="props" :class="[`ml-auto`, isHovering ? 'text-error' : 'text-white']"
+                                        size="small" prepend-icon="mdi-close" variant="tonal"
+                                        @click="removeAdult(adult, adult_index)">Remove</v-btn>
+                                </template>
+                            </v-hover>
                         </template>
+                        <v-select :disabled="!adult.bus" clearable chips label="Bus Meeting Point"
+                            :items="['Tahreer', 'Sheraton', 'Obour appartements (Salah Salem)', 'Downtown']" variant="outlined"
+                            class="min-w-full"></v-select>
                     </PersonDetails>
                     <v-btn :disabled="!adult.child" variant="outlined" prepend-icon="mdi-baby"
                         @click="AddChildOfAdult(adult_index)">Add a Child</v-btn>
-                    <div v-show="adult.child" class="px-12 pt-2">
-                        <PersonDetails v-for="( child, child_index ) in adult.children" :key="child_index" :person="child"
-                            :index="child_index" label="Child">
-                            <template #options>
-                                <v-checkbox density="compact" hide-details label="Bus" style="width: fit-content;"
-                                    v-model="child.bus" />
-                                <v-checkbox density="compact" hide-details label="Food" style="width: fit-content;"
-                                    v-model="child.food" />
-                            </template>
-                            <template #remove>
-                                <v-btn class="ml-auto hover:text-red-700" size="small" prepend-icon="mdi-close"
-                                    variant="tonal" @click="removeChildOfAdult(adult_index, child_index)">Remove</v-btn>
-                            </template>
-                        </PersonDetails>
-                    </div>
+                    <ExpandText v-if="adult.children.length > 0" class="!w-full !block">
+                        <div class="px-2 pt-2">
+                            <PersonDetails v-for="( child, child_index ) in adult.children" :key="child_index"
+                                :person="child" :index="child_index" label="Child">
+                                <template #options>
+                                    <v-checkbox :disabled="!adult.bus" density="compact" hide-details label="Bus" style="width: fit-content;"
+                                        v-model="child.bus" />
+                                    <v-checkbox density="compact" hide-details label="Food" style="width: fit-content;"
+                                        v-model="child.food" />
+                                </template>
+                                <template #remove>
+                                    <v-hover>
+                                        <template #default="{ isHovering, props }">
+                                            <v-btn v-bind="props"
+                                                :class="[`ml-auto`, isHovering ? 'text-error' : 'text-white']" size="small"
+                                                prepend-icon="mdi-close" variant="tonal"
+                                                @click="removeChildOfAdult(adult_index, child_index)">Remove</v-btn>
+                                        </template>
+                                    </v-hover>
+                                </template>
+                            </PersonDetails>
+                        </div>
+                    </ExpandText>
                 </v-col>
             </v-row>
         </v-container>
@@ -122,7 +138,7 @@ const OpenBottomSheet = (e) => {
     if (sheet.value.opened) {
         e.target.classList.remove('mdi-chevron-double-up')
         e.target.classList.add('mdi-chevron-double-down')
-        sheet.value.addClass = 'translate-y-[-0rem]';
+        sheet.value.addClass = 'translate-y-[0rem]';
     }
     else {
         e.target.classList.remove('mdi-chevron-double-down');

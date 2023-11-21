@@ -1,7 +1,16 @@
 <template>
     <div class="block-content font-medium text-base">
-        <p>{{ content.split(/\s+/).slice(0, 25).join(' ') }}<span v-show="!isExpanded">...</span> <span
-                v-show="isExpanded">{{ content.split(/\s+/).slice(25).join(' ') }}</span></p>
+        <p>
+            <slot name="summary">
+                {{ content?.split(/\s+/).slice(0, 25).join(' ') }}
+            </slot>
+            <span v-show="!isExpanded">...</span>
+        <div v-show="isExpanded">
+            <slot>
+                <span>{{ content?.split(/\s+/).slice(25).join(' ') }}</span>
+            </slot>
+        </div>
+        </p>
         <button class="block-content__button" @click="isExpanded = !isExpanded">
             {{ toggleCtaLabel }}
         </button>
