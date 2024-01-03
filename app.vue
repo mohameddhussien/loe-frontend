@@ -48,11 +48,11 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgb(240, 136, 230);
+  background: rgb(255, 128, 171);
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(240, 215, 230);
+  background: rgb(255, 60, 163);
 }
 </style>

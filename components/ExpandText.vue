@@ -11,7 +11,7 @@
             </slot>
         </div>
         </p>
-        <button class="block-content__button" @click="isExpanded = !isExpanded">
+        <button class="block-content__button font-sans" @click="isExpanded = !isExpanded">
             {{ toggleCtaLabel }}
         </button>
     </div>
@@ -19,11 +19,13 @@
   
 <script setup>
 const props = defineProps({
-    content: String
+    content: String,
+    showText: String,
+    hideText: String
 })
 const isExpanded = ref(true);
 const toggleCtaLabel = computed(() =>
-    isExpanded.value ? "Collapse" : "Expand"
+    isExpanded.value ? (props.hideText ? props.hideText : "Collapse") : (props.showText ? props.showText : "Expand")
 )
 </script>
   

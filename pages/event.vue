@@ -4,21 +4,20 @@
             <v-col xl="3" xxl="4" lg="5" md="5" cols="12">
                 <v-carousel cycle hide-delimiter-background :show-arrows="false" :touch="true"
                     style="border-radius: 5px; height: 500px;">
-                    <v-carousel-item v-for="(image) in event.images" :src="image" cover />
+                    <v-carousel-item v-for="(image) in event.IMAGES" :src="image" cover />
                 </v-carousel>
             </v-col>
             <v-col>
                 <v-card class="d-flex flex-column" variant="text">
                     <v-card-title>
-                        <SpecialTextDesign class="text-4xl ma-3" :toBeDecorated="event.name"
+                        <SpecialTextDesign class="text-4xl ma-3" :toBeDecorated="event.EVENT_NAME"
                             color="before:bg-crayota-200" />
                     </v-card-title>
                     <v-card-subtitle>
-                        {{ event.price }}EGP
+                        {{ event.PRICE }}EGP
                     </v-card-subtitle>
                     <v-card-text>
-                        <ExpandText :content="event.description" />
-
+                        <ExpandText :content="event.DESCRIPTION" />
                     </v-card-text>
                     <v-card-actions>
                         <v-menu>
@@ -29,7 +28,7 @@
                             </template>
                             <v-list>
                                 <v-list-item v-for="organizer in organizers" prepend-icon="mdi-whatsapp" value="wp"
-                                    :href="`https://wa.me/${organizer.phone}?text=Tell+me+more+about+${event.name}+trip`">
+                                    :href="`https://wa.me/${organizer.phone}?text=Tell+me+more+about+${event.EVENT_NAME}+trip`">
                                     <v-list-item-title><span style="font-family: 'Poppins', sans-serif;">{{ organizer.name
                                     }}</span></v-list-item-title>
                                 </v-list-item>
@@ -69,12 +68,15 @@
 </template>
 
 <script setup>
-import { getEvent } from '~/server/api/getEvent';
-const event = ref(getEvent(useRoute().query.key, false))
-useHead({
-    title: event.value.name,
-})
+import { getEventByID } from '~/server/api/getEventByID';
+const event = ref((await getEventByID(useRoute().query.id)).data);
 
+useHead({
+    title: event.value.EVENT_NAME,
+})
+definePageMeta({
+    middleware: ['event-not-found'],
+})
 const counter = ref(0)
 const openErrorDialog = ref(false)
 const TripDialog = ref(false)

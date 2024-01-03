@@ -14,10 +14,10 @@ export default {
         'crayota-200': '#FF80AB',
         'crayota-400': '#FF4081',
       },
-      backgroundImage: {
-        'light-pink-liquid': 'url("/light_pink_liquid_bg.gif")',
-        'dark-pink-liquid': "url('/dark_pink_liquid_bg.gif')",
-      }
+      // backgroundImage: {
+      //   'light-pink-liquid': 'url("/light_pink_liquid_bg.gif")',
+      //   'dark-pink-liquid': "url('/dark_pink_liquid_bg.gif')",
+      // }
     },
 
   },

@@ -28,22 +28,23 @@
                 <SpecialTextDesign to-be-decorated="People" />
                 <SpecialTextDesign :to-be-decorated="counter.toString()" color="before:bg-[rgba(255,255,255,0.3)]" />
                 <div class="gap-x-1 d-flex ml-auto">
-                    <v-btn @click="AddAdult()" :disabled="disable" variant="outlined" icon="mdi-menu-up-outline"
+                    <v-btn @click="AddAdult()" :disabled="counter >= 10" variant="outlined" icon="mdi-menu-up-outline"
                         size="x-small" />
-                    <v-btn @click="removeAdult(null, null)" variant="outlined" icon="mdi-menu-down-outline"
-                        size="x-small" />
+                    <v-btn @click="removeAdult(null, null)" :disabled="counter <= 0" variant="outlined"
+                        icon="mdi-menu-down-outline" size="x-small" />
                 </div>
             </v-row>
             <v-row class="gap-y-3">
                 <v-col cols="12" v-for="( adult, adult_index ) in  Adults.details" :key="adult_index">
-                    <PersonDetails :person="adult" :index="adult_index" label="Adult">
+                    <PersonDetails @show-details="(value) => adult.showDetails = value" :person="adult" :index="adult_index"
+                        label="Adult">
                         <template #options>
-                            <v-checkbox density="compact" hide-details label="Bus" style="width: fit-content;"
-                                v-model="adult.bus" />
-                            <v-checkbox density="compact" hide-details label="Food" style="width: fit-content;"
-                                v-model="adult.food" />
-                            <v-checkbox :disabled="disable" density="compact" hide-details label="Add children"
-                                v-model="adult.child" style="width: fit-content;" />
+                            <v-checkbox v-show="adult.showDetails" density="compact" hide-details label="Bus"
+                                style="width: fit-content;" v-model="adult.bus" />
+                            <v-checkbox v-show="adult.showDetails" density="compact" hide-details label="Food"
+                                style="width: fit-content;" v-model="adult.food" />
+                            <v-checkbox v-show="adult.showDetails" :disabled="counter >= 10" density="compact" hide-details
+                                label="Add children" v-model="adult.child" style="width: fit-content;" />
                         </template>
                         <template #remove>
                             <v-hover>
@@ -54,21 +55,27 @@
                                 </template>
                             </v-hover>
                         </template>
-                        <v-select :disabled="!adult.bus" clearable chips label="Bus Meeting Point"
-                            :items="['Tahreer', 'Sheraton', 'Obour appartements (Salah Salem)', 'Downtown']" variant="outlined"
-                            class="min-w-full"></v-select>
+                        <v-select v-show="adult.showDetails" :disabled="!adult.bus" clearable chips
+                            label="Bus Meeting Point"
+                            :items="['Tahreer', 'Sheraton', 'Obour appartements (Salah Salem)', 'Downtown']"
+                            variant="outlined" class="min-w-full"></v-select>
+                        <v-select v-show="adult.showDetails" :disabled="!adult.food" clearable chips label="Available meals"
+                            :items="['Breakfast Pie with Honey', 'Dinner meal (Chicken and Fried Potatoes)']"
+                            variant="outlined" class="min-w-full" multiple></v-select>
                     </PersonDetails>
-                    <v-btn :disabled="!adult.child" variant="outlined" prepend-icon="mdi-baby"
+                    <v-btn :disabled="!adult.child || counter >= 10" variant="outlined" prepend-icon="mdi-baby"
                         @click="AddChildOfAdult(adult_index)">Add a Child</v-btn>
-                    <ExpandText v-if="adult.children.length > 0" class="!w-full !block">
+                    <ExpandText show-text="Show Children Details" hide-text="Hide Children Details"
+                        v-if="adult.children.length > 0" class="!w-full !block">
                         <div class="px-2 pt-2">
-                            <PersonDetails v-for="( child, child_index ) in adult.children" :key="child_index"
-                                :person="child" :index="child_index" label="Child">
+                            <PersonDetails @show-details="(value) => child.showDetails = value"
+                                v-for="( child, child_index ) in adult.children" :key="child_index" :person="child"
+                                :index="child_index" label="Child">
                                 <template #options>
-                                    <v-checkbox :disabled="!adult.bus" density="compact" hide-details label="Bus" style="width: fit-content;"
-                                        v-model="child.bus" />
-                                    <v-checkbox density="compact" hide-details label="Food" style="width: fit-content;"
-                                        v-model="child.food" />
+                                    <v-checkbox v-show="child.showDetails" :disabled="!adult.bus" density="compact"
+                                        hide-details label="Bus" style="width: fit-content;" v-model="child.bus" />
+                                    <v-checkbox v-show="child.showDetails" density="compact" hide-details label="Food"
+                                        style="width: fit-content;" v-model="child.food" />
                                 </template>
                                 <template #remove>
                                     <v-hover>
@@ -106,6 +113,19 @@
                 </v-col>
             </v-row>
         </v-container>
+        <!-- <div class="text-center">
+            <v-btn size="x-large" text="Click Me" @click="sheet.opened = !sheet.opened"></v-btn>
+
+            <v-bottom-sheet v-model="sheet.opened">
+                <v-card class="text-center" height="200">
+                    <v-card-text>
+                        <v-btn variant="text" @click="sheet.opened = !sheet.opened">close</v-btn>
+                        <br><br>
+                        <div>This is a bottom sheet using the controlled by v-model instead of activator</div>
+                    </v-card-text>
+                </v-card>
+            </v-bottom-sheet>
+        </div> -->
     </CustomDialog>
 </template>
 
@@ -120,7 +140,7 @@ const sheet = ref({
     opened: false,
     addClass: ''
 })
-const disable = ref(false)
+
 const Children = ref({
     child: false,
     bus_price: 200,
@@ -131,7 +151,7 @@ const Adults = ref({
     adult: false,
     bus_price: 300,
     food_price: 150,
-    details: [{ name: "", age: "", contact: "", child: false, children: [], bus: false, food: false }]
+    details: [{ name: "", age: "", contact: "", child: false, children: [], bus: false, food: false, showDetails: true }]
 })
 const OpenBottomSheet = (e) => {
     sheet.value.opened = !sheet.value.opened;
@@ -150,10 +170,9 @@ const OpenBottomSheet = (e) => {
 const AddChildOfAdult = (adult) => {
     if (props.counter < 10) {
         emits('update', 1)
-        Adults.value.details[adult].children.push({ name: "", age: "", bus: false, food: false })
+        Adults.value.details[adult].children.push({ name: "", age: "", bus: false, food: false, showDetails: true })
     }
     else {
-        disable.value = true
         emits('update', 0)
     }
 }
@@ -167,13 +186,12 @@ const AddAdult = () => {
         Adults.value.details.push({ name: "", age: "", contact: "", children: [], bus: false, food: false })
     }
     else {
-        disable.value = true
         emits('update', props.counter)
     }
 }
 const removeAdult = (adult, index) => {
     if (!adult) {
-        emits('update', -1)
+        emits('update', -(Adults.value.details[Adults.value.details.length - 1].children.length + 1))
         Adults.value.details.pop()
     }
     else {
