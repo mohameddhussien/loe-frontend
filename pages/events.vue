@@ -23,7 +23,7 @@
                     <v-btn-group style="min-width: 300px; width: 300px;" rounded density="compact" variant="outlined"
                         divided>
                         <v-btn :disabled="event.STATUS === 'Sold Out!'"
-                            :to="{ path: `/event`, query: { id: event.EVENT_ID } }" min-width="64%"
+                            :to="{ path: `/event`, query: { key: event.EVENT_KEY } }" min-width="64%"
                             prepend-icon="mdi-book-outline">See details!</v-btn>
                         <v-btn :disabled="event.STATUS === 'Sold Out!'" min-width="34%"
                             prepend-icon="mdi-seat-outline">Book</v-btn>

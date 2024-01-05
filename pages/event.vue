@@ -69,8 +69,9 @@
 
 <script setup>
 import { getEventByID } from '~/server/api/getEventByID';
-const event = ref((await getEventByID(useRoute().query.id)).data);
+const event = ref((await getEventByID(useRoute().query.key)).data);
 
+console.log(event.value)
 useHead({
     title: event.value.EVENT_NAME,
 })
@@ -81,22 +82,6 @@ const counter = ref(0)
 const openErrorDialog = ref(false)
 const TripDialog = ref(false)
 const snackbar = ref(false)
-
-/* Mohamed and Abdo */
-const Children = ref({
-    child: false,
-    details: []
-})
-const AddChild = () => {
-    if (Children.value.details.length < counter.value)
-        Children.value.details.push({ name: "", age: "" })
-}
-const removeChild = (key) => {
-    Children.value.details.splice(key, 1)
-}
-const Bus = ref(false)
-const Food = ref(false)
-/* Mohamed and Abdo */
 
 const hasToken = ref(true)
 await useFetch('/api/cookies', {

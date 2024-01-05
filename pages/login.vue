@@ -39,7 +39,7 @@ const content = ref({
     title: "Hello there!",
     subtitle: "Let's get you logged in.",
 })
-// const session = ref(new UserSession)
+
 const username = ref('')
 const password = ref('')
 const loading = ref(false)

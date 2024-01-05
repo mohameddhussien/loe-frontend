@@ -4,8 +4,8 @@
     <SpecialTextDesign class="text-5xl text-center ma-5" before="Just" to-be-decorated="Announced!"
       color="before:bg-crayota-200" />
     <v-row justify="center" no-gutters>
-      <v-col v-for="(event, key) in events" :key="key" class="d-flex justify-center"
-        xl="4" xxl="4" lg="4" md="6" cols="12">
+      <v-col v-for="(event, key) in justAnnouncedEvents" :key="key" class="d-flex justify-center" xl="4" xxl="4" lg="4" md="6"
+        cols="12">
         <v-card min-height="300" class="ma-1 pa-1" variant="text"
           style="width: 100%; max-width: 350px; min-width: 300px;">
           <p class="font-sans text-center font-medium">{{ event.EVENT_NAME }}</p>
@@ -13,8 +13,7 @@
             style="border-radius: 5px;">
             <v-carousel-item v-for="(image) in event.IMAGES" :src="image" cover />
           </v-carousel>
-          <v-btn variant="outlined" block
-            :to="{ path: '/event', query: { id: event.EVENT_ID } }"
+          <v-btn variant="outlined" block :to="{ path: '/event', query: { key: event.EVENT_KEY } }"
             class="border border-pink-darken-2 ma-1 hover:scale-105 hover:bg-[#F06292] hover:text-white">
             Go to event</v-btn>
         </v-card>
@@ -34,7 +33,7 @@
               icon="mdi-skip-previous-outline" />
           </template>
           <v-carousel-item class="d-flex justify-center h-[300px]"
-            v-for="event in events.filter(event => event.CATEGORY == 'Comming Soon!' ? event : undefined)">
+            v-for="event in commingSoonEvents">
             <v-card style="width: 50%; max-width: 500px; min-width: 300px;" class="ma-2 mx-auto pa-4 text-center"
               variant="text">
               <p class="font-sans text-center font-medium">{{ event.EVENT_NAME }}</p>
@@ -60,5 +59,14 @@ useHead({
   title: 'Ladies only events',
 })
 const events = ref(await getAllEvents())
+const justAnnouncedEvents = ref(events.value.filter(event => {
+  const status = event.STATUS.toString().toLowerCase();
+  return status === 'just announced!';
+}))
+const commingSoonEvents = ref(events.value.filter(event => {
+  const status = event.STATUS.toString().toLowerCase();
+  return status === 'comming soon!';
+}))
+console.log(events)
 
 </script>

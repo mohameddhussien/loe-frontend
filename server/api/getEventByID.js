@@ -1,5 +1,5 @@
-export async function getEventByID(ID) {
-  const response = await useFetch(`${useRuntimeConfig().public.baseURL}/events/${ID}`);
+export async function getEventByID(key) {
+  const response = await useFetch(`${useRuntimeConfig().public.baseURL}/events/${key}`);
   console.log("data", response.data);
   return response;
 }
