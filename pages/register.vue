@@ -19,8 +19,8 @@
             :color="color" @close="endTimer()">
             <p class="text-xl">{{ title }}</p>
             <v-list class="bg-transparent">
-                <v-list-item prepend-icon="mdi-circle-small" base-color="white" density="compact" v-for="line in message">
-                    <span>{{ line }}</span>
+                <v-list-item prepend-icon="mdi-circle-small" base-color="white" density="compact">
+                    <span>{{ message }}</span>
                 </v-list-item>
             </v-list>
         </CustomSnackBar>
@@ -88,14 +88,16 @@ const submit = async () => {
     })
     snackbar.value = true
     loading.value = false
-    console.log(title.value)
-    if (Object.keys(response.value)[0].toUpperCase() == 'error'.toUpperCase()) {
-        Object.values(response.value).filter((value) => message.value = value)
+    console.log(response.value)
+    const responseKey = Object.keys(response.value)[0];
+    const responseValue = Object.values(response.value)[0];
+    if (responseKey === 'error') {
+        message.value = responseValue;
         return 0;
     }
-    title.value = Object.keys(response.value)[0]
-    color.value = 'success'
-    message.value = ['Signed up succesfully! Redirecting you to login page...']
+    title.value = responseKey;
+    color.value = 'success';
+    message.value = responseValue;
 }
 </script>
 

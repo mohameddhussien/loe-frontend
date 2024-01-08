@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer :order="1" width="300" v-model="open" expand-on-hover rail>
+    <v-navigation-drawer :order="1" width="300" v-model="openNav" expand-on-hover rail>
         <v-list>
             <v-list-item prepend-avatar="/Ladies_only_events.jpg">
                 <v-list-item-title>
@@ -31,7 +31,7 @@
     <v-app-bar elevation="0" :order="2" color="rgba(255,255,255,0.5)" class="border">
 
         <v-app-bar-nav-icon data-aos="slide-right">
-            <v-btn icon="mdi-menu" @click="open = !open" />
+            <v-btn icon="mdi-menu" @click="openNav = !openNav" />
         </v-app-bar-nav-icon>
         <v-app-bar-title data-aos="slide-right">
             <div class="d-flex max-md:justify-center">
@@ -43,38 +43,17 @@
             </div>
         </v-app-bar-title>
         <v-card data-aos="slide-left" elevation="0" color="rgba(0,0,0,0)">
-            <CustomDialog :elevate="0" color="transparent" width="700" :persistent="true" :opened="search"
-                @close="search = false" transition="slide-y">
-                <template #title>
-                    <v-autocomplete @update:model-value="search = false" menu-icon="mdi-menu-swap-outline"
-                        v-model="searchtext" bg-color="#F06292" :hide-details="true" variant="solo"
-                        clear-icon="mdi-close-circle-outline" clearable rounded label="Search for a trip.."
-                        :items="['Ain Sokhna', 'Dahab', 'Alexandria', 'Yakht Trip']" return-object>
-                        <template #prepend>
-                            <v-btn
-                                class="border border-pink-darken-2 ma-1 hover:scale-105 hover:bg-[#F06292] hover:text-white"
-                                @click="search = false" icon="mdi-close"></v-btn>
-                        </template>
-                        <template #label="{ label }">
-                            <span class="font-bold text-md font-sans">{{ label }}</span>
-                        </template>
-                        <template #no-data>
-                            <p class="text-center font-bold text-2xl font-sans">No Data Found!</p>
-                        </template>
-                    </v-autocomplete>
-                </template>
-                <div></div>
-            </CustomDialog>
+            <SearchBar :open-search-bar="openSearch" @close="openSearch = false" />
             <v-card-actions>
                 <v-switch @click="toggleTheme" v-model="theme.global.current.value.dark"
                     class="align-self-center ma-1 d-none d-md-flex" inset color="pink-lighten-3" hide-details />
-                <v-btn @click="search = true" icon="mdi-calendar-search" size="small" variant="outlined"
+                <v-btn @click="openSearch = true" icon="mdi-calendar-search" size="small" variant="outlined"
                     class="border border-pink-darken-2 ma-1 hover:scale-105 hover:bg-[#F06292] hover:text-white" />
                 <v-btn variant="outlined" to="/register" v-if="!hasToken"
                     class="d-md-flex d-none border border-pink-darken-2 ma-1 hover:scale-105  hover:bg-[#F06292] hover:text-white">Signup</v-btn>
                 <v-btn variant="outlined" to="/login" v-if="!hasToken"
                     class="d-md-flex d-none border border-pink-darken-2 ma-1 hover:scale-105 hover:bg-[#F06292] hover:text-white">Login</v-btn>
-                <v-btn v-if="hasToken" @click="logout()" variant="outlined"
+                <v-btn v-if="hasToken" @click="async () => await logout()" variant="outlined"
                     class="d-md-flex d-none border border-pink-darken-2 ma-1 hover:scale-105 hover:bg-[#F06292] hover:text-white">Logout</v-btn>
             </v-card-actions>
         </v-card>
@@ -83,34 +62,15 @@
 
 <script setup>
 import { useTheme } from 'vuetify'
+import { logout, hasToken } from '~/store/session';
 const theme = useTheme()
 
-const emits = defineEmits(['prize'])
-const search = ref(false)
-const searchtext = ref('')
-const open = ref(false)
-
-const { reset } = await useSession()
-const hasToken = ref(false)
-await useFetch('/api/cookies', {
-    onResponse({ response }) {
-        if (response._data?.token)
-            hasToken.value = true
-    }
-})
-console.log("Has token:", hasToken.value)
-const logout = async () => {
-    await reset()
-    reloadNuxtApp()
-}
-
+const openSearch = ref(false)
+const openNav = ref(false)
 
 function toggleTheme() {
     theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
 }
-watch(() => searchtext.value, () => {
-    console.log(searchtext.value)
-})
 </script>
 
 <style scoped></style>

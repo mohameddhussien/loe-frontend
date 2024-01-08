@@ -1,10 +1,9 @@
 <template>
     <v-app>
-        <CustomDialog :opened="prize" width="700" @close="prize = false" decorated-text="Congratulations!"
-            message="You have found an Easter egg on our website! We are so glad you took the time to explore our site and discover this hidden gem.As a reward for your sharp eyes, we are offering you a special discount on your next trip booking.Simply use the code EASTEREGG at checkout to save 10 % on your trip.We hope you enjoy your next trip with us! Sincerely, Ladies Only Events Organization"
-            transition="scale" />
-        <AppNavBar @prize="openPrize" />
+        <AlertSnackBar />
         <v-main>
+            <BookingDetails :dialog-open="isDialogOpen" @save="closeDialogAndSave()" @cancel="cancelCurrentProcess()"
+                :event="currentEvent" />
             <slot />
         </v-main>
         <AppFooter />
@@ -14,17 +13,10 @@
 <script setup>
 import { useTheme } from 'vuetify'
 import { useThemeChanges } from '@/composables/themeChanges'
+import { currentEvent, isDialogOpen, closeDialogAndSave, cancelCurrentProcess } from '~/store/dialogActions';
 const theme = useTheme()
 
-const prize = ref(false)
-const openPrize = (delay) => {
-    setTimeout(() => {
-        prize.value = true
-    }, delay)
-}
-// const bgImg = ref('!bg-light-pink-liquid')
 watch(() => theme.global.current.value.dark, (value) => {
-    // bgImg.value = value ? '!bg-dark-pink-liquid' : '!bg-light-pink-liquid'
     useThemeChanges().value = value ? "/dark_pink_liquid_bg.gif" : "/light_pink_liquid_bg.gif"
 })
 </script>

@@ -2,8 +2,9 @@
     <v-container fluid>
         <v-row>
             <v-col v-for="(event, key) in events" :key="key" class="d-flex justify-center relative">
-                <v-img style="position: absolute; z-index: 1; bottom: -2px;" v-if="event.STATUS === 'Sold Out!'"
-                    src="sold_out.png" aspect-ratio="2/1" width="100"></v-img>
+                <v-img style="position: absolute; z-index: 1; bottom: -2px;"
+                    v-if="statusMappings.some(mapping => event.STATUS in mapping)" :src="getImageUrl(event.STATUS)"
+                    aspect-ratio="2/1" width="100"></v-img>
                 <div class="d-flex flex-column gap-y-4">
                     <v-carousel style="width: 300px; height: 300px; border-radius: 10px;" cycle :show-arrows="false"
                         hide-delimiter-background class="elevation-5">
@@ -22,11 +23,11 @@
                     </span>
                     <v-btn-group style="min-width: 300px; width: 300px;" rounded density="compact" variant="outlined"
                         divided>
-                        <v-btn :disabled="event.STATUS === 'Sold Out!'"
+                        <v-btn :disabled="statusMappings.some(mapping => event.STATUS in mapping)"
                             :to="{ path: `/event`, query: { key: event.EVENT_KEY } }" min-width="64%"
                             prepend-icon="mdi-book-outline">See details!</v-btn>
-                        <v-btn :disabled="event.STATUS === 'Sold Out!'" min-width="34%"
-                            prepend-icon="mdi-seat-outline">Book</v-btn>
+                        <v-btn :disabled="statusMappings.some(mapping => event.STATUS in mapping)"
+                            @click="openDialog(event)" min-width="34%" prepend-icon="mdi-seat-outline">Book</v-btn>
                     </v-btn-group>
                 </div>
             </v-col>
@@ -37,8 +38,15 @@
 <script setup>
 import { format } from 'date-fns';
 import { getAllEvents } from '~/server/api/getAllEvents';
+import { openDialog } from '~/store/dialogActions';
+
 const events = ref(await getAllEvents())
 
+const statusMappings = ref([{ 'Sold Out!': 'sold_out.png' }, { 'Coming Soon!': 'coming_soon.png' }])
+const getImageUrl = (status) => {
+    const mapping = statusMappings.value.find(mapping => status in mapping);
+    return mapping ? mapping[status] : null;
+};
 //  On window resize hide drawer
 const windowWidth = ref(window.innerWidth)
 const onWidthChange = () => windowWidth.value = window.innerWidth

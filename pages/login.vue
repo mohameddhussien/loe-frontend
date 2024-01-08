@@ -15,26 +15,18 @@
                 <NuxtLink to="/register" class="text-pink-lighten-1 cursor-pointer hover:underline">Signup Now!</NuxtLink>
             </div>
         </template>
-        <CustomSnackBar @update="closeSnackbar()" :opened="snackbar" :title="title" :message="message" :color="color"
-            @close="endTimer()">
-            <p class="text-xl">{{ title }}</p>
-            <v-list class="bg-transparent">
-                <v-list-item prepend-icon="mdi-circle-small" base-color="white" density="compact">
-                    <span>{{ message }}</span>
-                </v-list-item>
-            </v-list>
-        </CustomSnackBar>
     </RegistrationCard>
 </template>
 
 <script setup>
+import { login, hasToken, update, refresh } from '~/store/session'
+import { showSnackbar, snackbarState, } from '@/composables/store/snackBarActions'
 definePageMeta({
     layout: 'registration'
 })
 useHead({
     title: 'Login',
 })
-const { session, refresh, update } = await useSession()
 const content = ref({
     title: "Hello there!",
     subtitle: "Let's get you logged in.",
@@ -43,43 +35,21 @@ const content = ref({
 const username = ref('')
 const password = ref('')
 const loading = ref(false)
-
-const title = ref('Error')
-const color = ref('red-darken-1')
-const snackbar = ref(false)
-const message = ref('')
-const endTimer = () => {
-    snackbar.value = false;
-}
-function closeSnackbar() {
-    setTimeout(() => {
-        if (title.value == 'Success')
-            navigateTo('/')
-        snackbar.value = false
-    }, 100);
-}
 const submit = async () => {
     loading.value = true
-    const { data: response } = await useFetch('login', {
-        baseURL: useRuntimeConfig().public.baseURL,
-        method: 'post',
-        body: {
-            "username": username.value,
-            "password": password.value
-        }
-    })
-    snackbar.value = true
+    const response = await login(username, password)
     loading.value = false
-    if (Object.keys(response.value)[0].toUpperCase() == 'error'.toUpperCase()) {
-        message.value = response.value.error
+    if (response.value?.error) {
+        snackbarState.value.snackbarText = response.value?.error
+        showSnackbar(2, { color: 'error' })
+        hasToken.value = false
         return 0;
     }
-    title.value = 'Success'
-    color.value = 'success'
-    message.value = 'You have been successfully logged in.'
+    snackbarState.value.snackbarText = 'You have been successfully logged in.'
+    showSnackbar(2, { color: 'success' })
+    hasToken.value = true
     await update({ token: response.value?.token })
     await refresh()
-    console.log(session.value)
 }
 </script>
 

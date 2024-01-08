@@ -1,20 +1,17 @@
 <template>
-    <CustomDialog width="10000" :opened="opened" @close="emits('close', false)" transition="dialog-bottom"
-        :fullscreen="true" color="pink-accent-1">
+    <CustomDialog width="10000" :dialog-open="opened" @close="emits('cancel')" transition="dialog-bottom" :fullscreen="true"
+        color="pink-accent-1">
         <template #title>
             <v-toolbar color="transparent">
-                <v-btn class="ma-0 d-none d-md-flex" variant="outlined" @click="emits('close', false)"
-                    prepend-icon="mdi-close">
+                <v-btn class="ma-0 d-none d-md-flex" variant="outlined" prepend-icon="mdi-close" @click="emits('cancel')">
                     Close
                 </v-btn>
-                <v-btn class="ma-0 d-md-none d-flex" variant="outlined" @click="emits('close', false)" icon="mdi-close" />
+                <v-btn class="ma-0 d-md-none d-flex" variant="outlined" icon="mdi-close" @click="emits('cancel')" />
 
                 <v-img src="/loelogo.png" :max-width="200" :max-height="60" class="mx-auto" aspect-ratio="2/1"
                     cover></v-img>
-                <v-btn class="ma-0 d-md-none d-flex" variant="outlined" @click="emits('close', false)"
-                    icon="mdi-check-all" />
-                <v-btn class="d-none d-md-flex" variant="outlined" @click="emits('close', false)"
-                    prepend-icon="mdi-check-all">
+                <v-btn class="ma-0 d-md-none d-flex" variant="outlined" icon="mdi-check-all" @click="emits('save')" />
+                <v-btn class="d-none d-md-flex" variant="outlined" prepend-icon="mdi-check-all" @click="emits('save')">
                     Confirm
                 </v-btn>
             </v-toolbar>
@@ -26,11 +23,11 @@
             </v-row>
             <v-row class="mx-2 gap-x-5">
                 <SpecialTextDesign to-be-decorated="People" />
-                <SpecialTextDesign :to-be-decorated="counter.toString()" color="before:bg-[rgba(255,255,255,0.3)]" />
+                <SpecialTextDesign :to-be-decorated="personCounter.toString()" color="before:bg-[rgba(255,255,255,0.3)]" />
                 <div class="gap-x-1 d-flex ml-auto">
-                    <v-btn @click="AddAdult()" :disabled="counter >= 10" variant="outlined" icon="mdi-menu-up-outline"
+                    <v-btn @click="AddAdult()" :disabled="personCounter >= 10" variant="outlined" icon="mdi-menu-up-outline"
                         size="x-small" />
-                    <v-btn @click="removeAdult(null, null)" :disabled="counter <= 0" variant="outlined"
+                    <v-btn @click="removeAdult(null, null)" :disabled="personCounter <= 0" variant="outlined"
                         icon="mdi-menu-down-outline" size="x-small" />
                 </div>
             </v-row>
@@ -43,8 +40,8 @@
                                 style="width: fit-content;" v-model="adult.bus" />
                             <v-checkbox v-show="adult.showDetails" density="compact" hide-details label="Food"
                                 style="width: fit-content;" v-model="adult.food" />
-                            <v-checkbox v-show="adult.showDetails" :disabled="counter >= 10" density="compact" hide-details
-                                label="Add children" v-model="adult.child" style="width: fit-content;" />
+                            <v-checkbox v-show="adult.showDetails" :disabled="personCounter >= 10" density="compact"
+                                hide-details label="Add children" v-model="adult.child" style="width: fit-content;" />
                         </template>
                         <template #remove>
                             <v-hover>
@@ -63,7 +60,7 @@
                             :items="['Breakfast Pie with Honey', 'Dinner meal (Chicken and Fried Potatoes)']"
                             variant="outlined" class="min-w-full" multiple></v-select>
                     </PersonDetails>
-                    <v-btn :disabled="!adult.child || counter >= 10" variant="outlined" prepend-icon="mdi-baby"
+                    <v-btn :disabled="!adult.child || personCounter >= 10" variant="outlined" prepend-icon="mdi-baby"
                         @click="AddChildOfAdult(adult_index)">Add a Child</v-btn>
                     <ExpandText show-text="Show Children Details" hide-text="Hide Children Details"
                         v-if="adult.children.length > 0" class="!w-full !block">
@@ -101,41 +98,32 @@
             <v-row class="bg-pink-lighten-1 font-sans font-medium" no-gutters>
                 <v-col class="pa-3 d-none d-sm-flex" cols="5" md="4">
                     <SpecialTextDesign :to-be-decorated="`${(Children.details.length * (event.price /
-                        2)) + (event.price * (counter - Children.details.length)) + (Children.bus_price * Children.details.filter((obj) => obj.bus).length) + ((counter - Children.details.length) * 300) +
-                        (Children.food_price * Children.details.filter((obj) => obj.food).length) + ((counter - Children.details.length) * 150)}EGP`
+                        2)) + (event.price * (personCounter - Children.details.length)) + (Children.bus_price * Children.details.filter((obj) => obj.bus).length) + ((personCounter - Children.details.length) * 300) +
+                        (Children.food_price * Children.details.filter((obj) => obj.food).length) + ((personCounter - Children.details.length) * 150)}EGP`
                         " color="before:border-b-2 ma-10 text-xxl pa-1 mb-8 before:-skew-x-[70deg] text-4xl my-5" />
                 </v-col>
                 <v-col v-if="Children.details.length" class="pa-3">
                     <span>Children: {{ Children.details.length }}</span>
                 </v-col>
-                <v-col v-if="counter - Children.details.length" class="pa-3">
-                    <span>Adults: {{ counter - Children.details.length }}</span>
+                <v-col v-if="personCounter - Children.details.length" class="pa-3">
+                    <span>Adults: {{ personCounter - Children.details.length }}</span>
                 </v-col>
             </v-row>
         </v-container>
-        <!-- <div class="text-center">
-            <v-btn size="x-large" text="Click Me" @click="sheet.opened = !sheet.opened"></v-btn>
 
-            <v-bottom-sheet v-model="sheet.opened">
-                <v-card class="text-center" height="200">
-                    <v-card-text>
-                        <v-btn variant="text" @click="sheet.opened = !sheet.opened">close</v-btn>
-                        <br><br>
-                        <div>This is a bottom sheet using the controlled by v-model instead of activator</div>
-                    </v-card-text>
-                </v-card>
-            </v-bottom-sheet>
-        </div> -->
     </CustomDialog>
 </template>
 
 <script setup>
+import { personCounter } from '~/store/dialogActions';
+const emits = defineEmits(['cancel', 'save'])
 const props = defineProps({
-    opened: Boolean,
-    counter: Number,
+    dialogOpen: Boolean,
     event: Object
 })
-const emits = defineEmits(['close', 'update'])
+const opened = ref(props.dialogOpen);
+
+
 const sheet = ref({
     opened: false,
     addClass: ''
@@ -168,37 +156,35 @@ const OpenBottomSheet = (e) => {
     console.log(e.target.classList)
 }
 const AddChildOfAdult = (adult) => {
-    if (props.counter < 10) {
-        emits('update', 1)
+    if (personCounter.value < 10) {
+        personCounter.value++
         Adults.value.details[adult].children.push({ name: "", age: "", bus: false, food: false, showDetails: true })
-    }
-    else {
-        emits('update', 0)
     }
 }
 const removeChildOfAdult = (adult, child) => {
-    emits('update', -1)
+    personCounter.value--
     Adults.value.details[adult].children.splice(child, 1)
 }
 const AddAdult = () => {
-    if (props.counter < 10) {
-        emits('update', 1)
+    if (personCounter.value < 10) {
+        personCounter.value++
         Adults.value.details.push({ name: "", age: "", contact: "", children: [], bus: false, food: false })
-    }
-    else {
-        emits('update', props.counter)
     }
 }
 const removeAdult = (adult, index) => {
     if (!adult) {
-        emits('update', -(Adults.value.details[Adults.value.details.length - 1].children.length + 1))
+        const lastAdultIndex = Adults.value.details.length - 1
+        personCounter.value -= (Adults.value.details[lastAdultIndex].children.length + 1)
         Adults.value.details.pop()
     }
     else {
-        emits('update', -(adult.children.length + 1))
+        personCounter.value -= adult.children.length + 1
         Adults.value.details.splice(index, 1)
     }
 }
+watchEffect(() => {
+    opened.value = props.dialogOpen;
+});
 </script>
 
 <style scoped></style>

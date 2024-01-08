@@ -4,8 +4,8 @@
     <SpecialTextDesign class="text-5xl text-center ma-5" before="Just" to-be-decorated="Announced!"
       color="before:bg-crayota-200" />
     <v-row justify="center" no-gutters>
-      <v-col v-for="(event, key) in justAnnouncedEvents" :key="key" class="d-flex justify-center" xl="4" xxl="4" lg="4" md="6"
-        cols="12">
+      <v-col v-for="(event, key) in justAnnouncedEvents" :key="key" class="d-flex justify-center" xl="4" xxl="4" lg="4"
+        md="6" cols="12">
         <v-card min-height="300" class="ma-1 pa-1" variant="text"
           style="width: 100%; max-width: 350px; min-width: 300px;">
           <p class="font-sans text-center font-medium">{{ event.EVENT_NAME }}</p>
@@ -32,8 +32,7 @@
             <v-btn variant="plain" @click="props.onClick()" class="hover:scale-125 hover:translate-x-2"
               icon="mdi-skip-previous-outline" />
           </template>
-          <v-carousel-item class="d-flex justify-center h-[300px]"
-            v-for="event in commingSoonEvents">
+          <v-carousel-item class="d-flex justify-center h-[300px]" v-for="event in commingSoonEvents">
             <v-card style="width: 50%; max-width: 500px; min-width: 300px;" class="ma-2 mx-auto pa-4 text-center"
               variant="text">
               <p class="font-sans text-center font-medium">{{ event.EVENT_NAME }}</p>
@@ -50,7 +49,7 @@
 </template>
 
 <script setup>
-import { getAllEvents } from '~/server/api/getAllEvents';
+import { events } from '~/store/events';
 definePageMeta({
   // set custom layout
   layout: 'default'
@@ -58,15 +57,13 @@ definePageMeta({
 useHead({
   title: 'Ladies only events',
 })
-const events = ref(await getAllEvents())
 const justAnnouncedEvents = ref(events.value.filter(event => {
   const status = event.STATUS.toString().toLowerCase();
   return status === 'just announced!';
 }))
 const commingSoonEvents = ref(events.value.filter(event => {
   const status = event.STATUS.toString().toLowerCase();
-  return status === 'comming soon!';
+  return status === 'coming soon!';
 }))
-console.log(events)
 
 </script>
