@@ -7,7 +7,6 @@
                 cover max-width="50" max-height="50" />
         </div>
         <v-main class="align-center d-flex justify-center">
-            <AlertSnackBar />
             <slot></slot>
         </v-main>
     </v-app>
@@ -15,7 +14,6 @@
 <script setup>
 import { useTheme } from 'vuetify/lib/framework.mjs';
 
-const open = ref(false)
 useTheme().global.name.value = 'light'
 </script>
 

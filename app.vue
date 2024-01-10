@@ -2,6 +2,7 @@
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+  <AlertSnackBar />
 </template>
 
 <script setup>

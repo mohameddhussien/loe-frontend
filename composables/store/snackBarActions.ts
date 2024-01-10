@@ -1,49 +1,43 @@
 interface SnackbarOptions {
-    color?: String;
-    gap?: number;
-    login?: Boolean;
+    increment?: number;
+    progress: number;
+    timeout?: number;
 }
 
 interface SnackbarState {
     snackbar: boolean;
     snackbarText: string;
-    timeout: number;
-    progress: number;
+    color?: string;
 }
 
-const snackbarState = useState<SnackbarState>('snackbar', () => ({
+// Refs for SnackbarState and SnackbarOptions
+const snackbarState = ref<SnackbarState>({
     snackbar: false,
     snackbarText: "This is a message from the snackbar",
+    color: 'success'
+});
+
+const snackBarOptions = ref<SnackbarOptions>({
+    increment: 2,
+    progress: 0,
     timeout: 3000,
-    progress: 0
-}));
+});
 
-const snackBarOptions = useState<SnackbarOptions>('options', () => ({
-    color: 'success',
-    gap: 4
-}));
-
-const showSnackbar = (increment: number = 2, options: SnackbarOptions = snackBarOptions.value): void => {
-    snackbarState.value.snackbar = true;
-
-    let timeoutCompleted = false;
-
-    const time = setTimeout(() => {
-        snackbarState.value.snackbar = false;
-        timeoutCompleted = true;
-    }, snackbarState.value.timeout);
-
-    const interval = setInterval(() => {
-        if (snackbarState.value.progress === 105 || timeoutCompleted || !snackbarState.value.snackbar) {
-            snackbarState.value.progress = 0;
-            clearInterval(interval);
-            clearTimeout(time);
-        }
-        snackbarState.value.progress += increment;
-    }, 50);
-    if (snackBarOptions.value.login)
-        navigateTo('/')
-        console.log("Options: ", snackBarOptions);
-    console.log("State: ", snackbarState);
+const showSnackbar = (state: SnackbarState, options: SnackbarOptions): void => {
+    snackbarState.value = state || snackbarState.value;
+    snackBarOptions.value = options || snackBarOptions.value;
+    if (!snackbarState.value.snackbar) {
+        snackbarState.value.snackbar = true;
+        const interval: NodeJS.Timeout = setInterval(() => hideSnackBar(interval), 60);
+    }
 };
+const hideSnackBar = (interval: NodeJS.Timeout): void => {
+    snackBarOptions.value.progress += snackBarOptions.value?.increment ?? 1;
+    if (snackBarOptions.value.progress >= 100 || !snackbarState.value.snackbar) {
+        snackBarOptions.value.progress = 0;
+        snackbarState.value.snackbar = false;
+        clearInterval(interval);
+        return
+    }
+}
 export { showSnackbar, snackbarState, snackBarOptions };

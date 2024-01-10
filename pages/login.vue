@@ -20,7 +20,7 @@
 
 <script setup>
 import { login, hasToken, update, refresh } from '~/store/session'
-import { showSnackbar, snackbarState, } from '@/composables/store/snackBarActions'
+import { showSnackbar } from '@/composables/store/snackBarActions'
 definePageMeta({
     layout: 'registration'
 })
@@ -40,13 +40,11 @@ const submit = async () => {
     const response = await login(username, password)
     loading.value = false
     if (response.value?.error) {
-        snackbarState.value.snackbarText = response.value?.error
-        showSnackbar(2, { color: 'error' })
+        showSnackbar({ snackbarText: response.value?.error, color: 'error' })
         hasToken.value = false
         return 0;
     }
-    snackbarState.value.snackbarText = 'You have been successfully logged in.'
-    showSnackbar(2, { color: 'success' })
+    showSnackbar({ snackbarText: response.value?.success, color: 'success' })
     hasToken.value = true
     await update({ token: response.value?.token })
     await refresh()

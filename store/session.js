@@ -13,6 +13,21 @@ const login = async (username, password) => {
     })
     return response;
 }
+const register = async () => {
+    const { data: response } = await useFetch('register', {
+        baseURL: useRuntimeConfig().public.baseURL,
+        method: 'post',
+        body: {
+            "username": username.value,
+            "first_name": fName.value,
+            "last_name": lname.value,
+            "email": email.value,
+            "password": password.value,
+            "confirmpass": confirmpass.value
+        }
+    })
+    return response;
+}
 
 
 const logout = async () => {
@@ -20,4 +35,4 @@ const logout = async () => {
     reloadNuxtApp()
     console.log("Session has token: ", session.value?.token)
 }
-export { hasToken, login, logout, update, refresh, session }
+export { hasToken, login, register, logout, update, refresh, session }

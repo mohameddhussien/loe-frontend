@@ -15,15 +15,6 @@
         <v-text-field @click:append-inner="confirmpass = ''" append-inner-icon="mdi-close"
             prepend-inner-icon="mdi-lock-check-outline" class="ma-2" v-model="confirmpass" type="password"
             variant="outlined" label="Confirm Password" />
-        <CustomSnackBar to="/login" @update="closeSnackbar()" :opened="snackbar" :title="title" :message="message"
-            :color="color" @close="endTimer()">
-            <p class="text-xl">{{ title }}</p>
-            <v-list class="bg-transparent">
-                <v-list-item prepend-icon="mdi-circle-small" base-color="white" density="compact">
-                    <span>{{ message }}</span>
-                </v-list-item>
-            </v-list>
-        </CustomSnackBar>
         <template #submit>
             <v-btn :loading="loading" @click="submit" variant="outlined"
                 class="ma-2 hover:bg-[#F06292] hover:border-[#F06292] hover:text-white" block>Submit</v-btn>
@@ -37,6 +28,7 @@
     </RegistrationCard>
 </template>
 <script setup>
+import { register } from '~/store/session'
 definePageMeta({
     layout: 'registration',
 })
@@ -57,38 +49,12 @@ const password = ref('')
 const confirmpass = ref('')
 
 // SnackBar
-const title = ref('Error')
-const color = ref('red-darken-1')
-const snackbar = ref(false)
-const message = ref('')
-const endTimer = () => {
-    snackbar.value = false;
-}
-function closeSnackbar() {
-    if (title.value == 'success')
-        navigateTo('/login')
-    setTimeout(() => {
-        snackbar.value = false
-    }, 100);
-}
 
 const submit = async () => {
     loading.value = true
-    const { data: response } = await useFetch('register', {
-        baseURL: useRuntimeConfig().public.baseURL,
-        method: 'post',
-        body: {
-            "username": username.value,
-            "first_name": fName.value,
-            "last_name": lname.value,
-            "email": email.value,
-            "password": password.value,
-            "confirmpass": confirmpass.value
-        }
-    })
-    snackbar.value = true
+    //  Make the registeration better using a v-form and use vue-validate
+    const response = await register();
     loading.value = false
-    console.log(response.value)
     const responseKey = Object.keys(response.value)[0];
     const responseValue = Object.values(response.value)[0];
     if (responseKey === 'error') {

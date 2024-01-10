@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <AlertSnackBar />
+        <AppNavBar />
         <v-main>
             <BookingDetails :dialog-open="isDialogOpen" @save="closeDialogAndSave()" @cancel="cancelCurrentProcess()"
                 :event="currentEvent" />
