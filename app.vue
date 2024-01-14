@@ -34,26 +34,5 @@
   transform: translate(-50px, 0);
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-}
 
-.theme--light.v-app-bar.v-toolbar.v-sheet {
-  background: transparent;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: rgb(240, 219, 230);
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: rgb(255, 128, 171);
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(255, 60, 163);
-}
 </style>

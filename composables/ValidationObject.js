@@ -1,4 +1,4 @@
-import { required, email, minLength, helpers, alphaNum, maxLength } from '@vuelidate/validators';
+import { required, email, minLength, helpers, alphaNum, maxLength, numeric, } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 
 export const useValidationObject = (formState) => {
@@ -16,8 +16,11 @@ export const useValidationObject = (formState) => {
         },
         first_name: { required: helpers.withMessage('Field is required.', required) },
         last_name: { required: helpers.withMessage('Field is required.', required) },
-
-        // Add validations for other form fields...
+        phone_number: {
+            required: helpers.withMessage('Field is required.', required),
+            numeric: helpers.withMessage('Numeric values only.', numeric),
+            validPhone: helpers.withMessage('Invalid Phone Number', helpers.regex(/01\d{9}$/)),
+        }
     };
 
     const $v = useVuelidate(validations, formState);

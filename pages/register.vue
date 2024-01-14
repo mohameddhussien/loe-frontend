@@ -1,8 +1,8 @@
 <template>
-    <RegistrationCard :isLogin="false">
+    <RegistrationCard img_src="/Ladies_Events_Reg.png" :isLogin="false">
         <!-- Registration form fields go here -->
         <template #fields="{ isLogin }">
-            <v-form @submit.prevent="handleSubmit" class="space-y-4">
+            <v-form @submit.prevent="handleSubmit" class="space-y-4 d-flex justify-center flex-column">
                 <!-- Username -->
                 <Field :fieldValue="registrationForm.username" prependInnerIcon="mdi-account-box-outline" label="Username"
                     :validator="$v" type="username" />
@@ -18,68 +18,69 @@
                 <!-- Last Name -->
                 <Field :fieldValue="registrationForm.last_name" prependInnerIcon="mdi-account-tie" label="First Name"
                     :validator="$v" type="last_name" />
-                <!-- Gender -->
-                <v-row class="ma-2">
-                    <v-col>
-                        <v-radio-group density="compact" v-model="registrationForm.gender.value">
-                            <v-radio label="Male" value="male" class="ma-2"></v-radio>
-                            <v-radio label="Female" value="female" class="ma-2"></v-radio>
-                        </v-radio-group>
-                    </v-col>
-                </v-row>
 
                 <v-textarea v-model="registrationForm.address.value" class="ma-2" variant="outlined"
                     label="Address"></v-textarea>
 
                 <!-- Add choose date component -->
-                <v-date-picker v-model="registrationForm.date_of_birth.value" class="ma-2" variant="outlined"
-                    label="Date of Birth"></v-date-picker>
+                <v-menu v-model="menu" :close-on-content-click="false" location="end">
+                    <template v-slot:activator="{ props }">
+                        <v-btn class="ma-2" :prepend-icon="registrationForm.date_of_birth.value ? 'mdi-check' : ''"
+                            variant="outlined" v-bind="props">
+                            Birth Date
+                        </v-btn>
+                    </template>
+                    <v-date-picker v-model="registrationForm.date_of_birth.value" header="Date of Birth">
+                        <template #actions>
+                            <v-btn
+                                @click="() => { menu = !menu; registrationForm.date_of_birth.value = null }">Close</v-btn>
+                            <v-btn @click="menu = !menu">Save</v-btn>
+                        </template>
+                    </v-date-picker>
+                </v-menu>
 
-                <Field :fieldValue="registrationForm.phone_number" prependInnerIcon="mdi-cellphone" label="Phone Number"
-                    :validator="$v" type="phone_number" />
+                <!-- Phone Number -->
+                <div class="d-flex">
+                    <v-combobox style="max-width: 105px;" class="ma-2" label="Code" item-title="c_name"
+                        item-value="c_code" :items="countryCodes.countries" variant="outlined">
+                        <template #selection="{ item }">
+                            <span>{{ item.value }}</span>
+                        </template>
+                    </v-combobox>
+                    <Field :fieldValue="registrationForm.phone_number" prependInnerIcon="mdi-cellphone" label="Phone Number"
+                        :validator="$v" type="phone_number" hint="Example: 0100 123 4567">
+                    </Field>
+                </div>
+
+                <!-- Gender -->
+                <v-row class="ma-2">
+                    <v-col>
+                        <v-radio-group inline hide-details class="d-flex justify-space-between" density="compact"
+                            v-model="registrationForm.gender.value">
+                            <v-radio inline color="grey-darken-1" label="Male" value="male" class="ma-2"></v-radio>
+                            <v-radio inline color="pink-darken-1" label="Female" value="female" class="ma-2"></v-radio>
+                        </v-radio-group>
+                    </v-col>
+                </v-row>
                 <v-btn type="submit" variant="outlined" :loading="loading"
                     class="ma-2 hover:bg-[#F06292] hover:border-[#F06292] hover:text-white" block>
-                    {{ isLogin ? 'Login' : 'Register' }}
+                    {{ isLogin ? 'Login' : 'Create account' }}
                 </v-btn>
             </v-form>
         </template>
     </RegistrationCard>
 </template>
-<!-- <RegistrationCard :title="content.title" :subtitle="content.subtitle">
-        <v-text-field class="ma-2" @click:append-inner="username = ''" append-inner-icon="mdi-close"
-            prepend-inner-icon="mdi-account-box-outline" v-model="username" variant="outlined" label="Display Name" />
-        <v-text-field @click:append-inner="fName = ''" append-inner-icon="mdi-close" prepend-inner-icon="mdi-hail"
-            class="ma-2" v-model="fName" variant="outlined" label="First Name" />
-        <v-text-field @click:append-inner="lname = ''" append-inner-icon="mdi-close" prepend-inner-icon="mdi-account-tie"
-            class="ma-2" v-model="lname" variant="outlined" label="Last Name" />
-        <v-text-field @click:append-inner="email = ''" append-inner-icon="mdi-close"
-            prepend-inner-icon="mdi-mailbox-open-up-outline" class="ma-2" v-model="email" variant="outlined"
-            label="Email" />
-        <v-text-field @click:append-inner="password = ''" append-inner-icon="mdi-close"
-            prepend-inner-icon="mdi-lock-outline" class="ma-2" v-model="password" type="password" variant="outlined"
-            label="Password" />
-        <v-text-field @click:append-inner="confirmpass = ''" append-inner-icon="mdi-close"
-            prepend-inner-icon="mdi-lock-check-outline" class="ma-2" v-model="confirmpass" type="password"
-            variant="outlined" label="Confirm Password" />
-        <template #submit>
-            <v-btn :loading="loading" @click="submit" variant="outlined"
-                class="ma-2 hover:bg-[#F06292] hover:border-[#F06292] hover:text-white" block>Submit</v-btn>
-        </template>
-        <template #footer>
-            <div class="flex flex-col items-center justify-center gap-y-2 text-sm font-bold">
-                <span class="border-dashed border-2 rounded-full px-2 border-black">Already a member?</span>
-                <NuxtLink to="/login" class="text-pink-lighten-1 cursor-pointer hover:underline">Login now!</NuxtLink>
-            </div>
-        </template>
-    </RegistrationCard> -->
+
 <script setup>
 import { register, loading } from '@/composables/store/session'
+import { getCountryCodes } from '~/server/api/getCountryCodes'
 definePageMeta({
     layout: 'registration',
 })
 useHead({
     title: 'Registration',
 })
+const menu = ref(false)
 const registrationForm = {
     username: ref(''),
     email: ref(''),
@@ -92,38 +93,20 @@ const registrationForm = {
     phone_number: ref('')
 };
 const $v = useValidationObject(registrationForm).$v
-
+const countryCodes = await getCountryCodes();
+console.log(countryCodes.value)
 const handleSubmit = async () => {
     //  Validate form!!
-    if (!$v.value.$validate())
-        return 0;
     const response = await register(registrationForm);
     const responseKey = Object.keys(response.value)[0];
     const responseValue = Object.values(response.value)[0];
     if (responseKey === 'error') {
         showSnackbar({ snackbarText: responseValue, color: 'error' })
-        message.value = responseValue;
         return 0;
     }
+    navigateTo('/login')
     showSnackbar({ snackbarText: responseValue, color: 'success' })
 }
-// import { register } from '@/composables/store/session'
-// const loading = ref(false)
-// const content = ref({
-//     title: "Welcome Newbie",
-//     subtitle: "Create your account now!",
-// })
-// //  Form Data
-// const username = ref('')
-// const fName = ref('')
-// const lname = ref('')
-// const email = ref('')
-// const password = ref('')
-// const confirmpass = ref('')
-
-// // SnackBar
-
-
 </script>
 
 

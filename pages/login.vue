@@ -1,5 +1,5 @@
 <template>
-    <RegistrationCard :isLogin="true">
+    <RegistrationCard img_src="/Ladies_Events_Log.png" :isLogin="true">
         <!-- Login form fields go here -->
         <template #fields="{ isLogin }">
             <v-form @submit.prevent="handleSubmit" class="space-y-4">

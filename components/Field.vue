@@ -1,9 +1,9 @@
 <template>
-    <v-text-field v-model="field" :prependInnerIcon="prependInnerIcon" class="ma-2" variant="outlined" :label="label">
+    <v-text-field :hint="hint" v-model="field" :prependInnerIcon="prependInnerIcon" class="ma-2" variant="outlined"
+        :label="label" :type="type" :clearable="true">
         <template v-slot:append-inner>
             <CustomTooltip iconColor="pink-darken-1" v-if="validator && checkInvalid(validator)"
                 :message="validator && getMessage(getField(validator))" icon="mdi-alert-circle" />
-            <v-icon @click="field = ''" v-if="!validator || !checkInvalid(validator)">mdi-close</v-icon>
         </template>
     </v-text-field>
 </template>
@@ -17,6 +17,10 @@ const props = defineProps({
     prependInnerIcon: String,
     label: String,
     type: String,
+    hint: {
+        type: String,
+        default: ""
+    },
     validator: {
         type: Object,
         default: null
@@ -30,7 +34,7 @@ const getField = (validator: ValidatorObject) => {
 
 const checkInvalid = (validator: ValidatorObject) => {
     const field = getField(validator);
-    const rulesToCheck = ['required', 'alphaNum', 'minLength', 'email', 'maxLength'];
+    const rulesToCheck = ['required', 'alphaNum', 'minLength', 'email', 'maxLength', 'numeric', 'validPhone'];
     const isFieldInvalid = rulesToCheck.some((rule) => {
         return field?.[rule] && field?.[rule].$invalid;
     });
@@ -49,6 +53,10 @@ const getMessage = (field: any): string | undefined => {
             return field.alphaNum.$message;
         } else if (field.email?.$invalid) {
             return field.email.$message;
+        } else if (field.numeric?.$invalid) {
+            return field.numeric.$message;
+        } else if (field.validPhone?.$invalid) {
+            return field.validPhone.$message;
         }
     }
 

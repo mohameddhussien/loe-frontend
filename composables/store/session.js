@@ -33,7 +33,6 @@ const register = async (formData) => {
         }
     })
     loading.value = false
-    navigateTo('/login')
     return response;
 }
 
