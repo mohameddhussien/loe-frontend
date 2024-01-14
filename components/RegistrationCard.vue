@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid class="pa-0 mt-12 border d-flex justify-center">
+    <v-container fluid class="pa-0 d-flex justify-center">
         <v-sheet class="!shadow-lg" max-width="1200" width="100%">
             <v-row no-gutters>
                 <v-col cols="12" lg="5" md="6">

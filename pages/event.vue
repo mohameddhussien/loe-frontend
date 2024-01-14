@@ -39,7 +39,7 @@
                             href="https://www.facebook.com/EventsforLadies/" size="small" />
                     </v-card-actions>
                     <v-card-actions class="flex-wrap gap-2">
-                        <v-btn @click="personCounter > 0 ? auth() : openErrorDialog = true" variant="outlined"
+                        <v-btn ref="myButton" @click="personCounter > 0 ? auth() : openErrorDialog = true" variant="outlined"
                             id="activator" prepend-icon="mdi-seat-outline"
                             class="border border-pink-darken-2 ma-0 hover:scale-105  hover:bg-[#F06292] hover:text-white book-trip"
                             size="large">Book trip</v-btn>
@@ -65,6 +65,7 @@ import { getEventByID } from '~/server/api/getEventByID';
 import { openDialog, personCounter } from '@/composables/dialogActions';
 import { hasToken as authenticated } from '@/composables/store/session';
 import { showSnackbar } from '@/composables/snackBarActions'
+
 
 const event = ref((await getEventByID(useRoute().query.key)).data);
 const organizers = ref([

@@ -18,6 +18,7 @@
 
 <script setup>
 import { login, loading, hasToken, update, refresh } from '@/composables/store/session'
+
 definePageMeta({
     layout: 'registration'
 })
@@ -40,7 +41,7 @@ const handleSubmit = async () => {
     hasToken.value = true
     await update({ token: response.value?.token })
     await refresh()
-    navigateTo('/')
+    window.history.back();
 }
 </script>
 
