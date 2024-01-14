@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { eventNames } from '~/store/events'
+import { eventNames } from '@/composables/store/events'
 const emits = defineEmits(['close'])
 const props = defineProps({
     openSearchBar: Boolean,

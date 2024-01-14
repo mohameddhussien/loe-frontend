@@ -19,11 +19,11 @@
         </v-list>
         <template #append>
             <v-list nav>
-                <v-list-item v-if="!hasToken" to="/login" prepend-icon="mdi-login" title="Login" value="login"
+                <v-list-item v-if="!authenticated" to="/login" prepend-icon="mdi-login" title="Login" value="login"
                     class="font-sans d-md-none d-flex" />
-                <v-list-item v-if="!hasToken" to="/register" prepend-icon="mdi-account-multiple" title="Signup"
+                <v-list-item v-if="!authenticated" to="/register" prepend-icon="mdi-account-multiple" title="Signup"
                     value="signup" class="font-sans d-md-none d-flex" />
-                <v-list-item v-if="hasToken" @click="logout()" prepend-icon="mdi-logout" title="Logout" value="logout"
+                <v-list-item v-if="authenticated" @click="logout()" prepend-icon="mdi-logout" title="Logout" value="logout"
                     class="font-sans d-md-none d-flex" />
             </v-list>
         </template>
@@ -49,11 +49,11 @@
                     class="align-self-center ma-1 d-none d-md-flex" inset color="pink-lighten-3" hide-details />
                 <v-btn @click="openSearch = true" icon="mdi-calendar-search" size="small" variant="outlined"
                     class="border border-pink-darken-2 ma-1 hover:scale-105 hover:bg-[#F06292] hover:text-white" />
-                <v-btn variant="outlined" to="/register" v-if="!hasToken"
+                <v-btn variant="outlined" to="/register" v-if="!authenticated"
                     class="d-md-flex d-none border border-pink-darken-2 ma-1 hover:scale-105  hover:bg-[#F06292] hover:text-white">Signup</v-btn>
-                <v-btn variant="outlined" to="/login" v-if="!hasToken"
+                <v-btn variant="outlined" to="/login" v-if="!authenticated"
                     class="d-md-flex d-none border border-pink-darken-2 ma-1 hover:scale-105 hover:bg-[#F06292] hover:text-white">Login</v-btn>
-                <v-btn v-if="hasToken" @click="async () => await logout()" variant="outlined"
+                <v-btn v-if="authenticated" @click="async () => await logout()" variant="outlined"
                     class="d-md-flex d-none border border-pink-darken-2 ma-1 hover:scale-105 hover:bg-[#F06292] hover:text-white">Logout</v-btn>
             </v-card-actions>
         </v-card>
@@ -62,7 +62,7 @@
 
 <script setup>
 import { useTheme } from 'vuetify'
-import { logout, hasToken } from '~/store/session';
+import { logout, hasToken as authenticated } from '@/composables/store/session';
 const theme = useTheme()
 
 const openSearch = ref(false)

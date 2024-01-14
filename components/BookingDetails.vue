@@ -115,7 +115,7 @@
 </template>
 
 <script setup>
-import { personCounter } from '~/store/dialogActions';
+import { personCounter } from '@/composables/dialogActions';
 const emits = defineEmits(['cancel', 'save'])
 const props = defineProps({
     dialogOpen: Boolean,

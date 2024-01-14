@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import { events } from '~/store/events';
+import { events } from '@/composables/store/events';
 definePageMeta({
   // set custom layout
   layout: 'default'

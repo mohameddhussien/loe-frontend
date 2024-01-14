@@ -5,6 +5,7 @@
         "confirmpass",
         "Nuxt",
         "searchtext",
+        "vuelidate",
         "vuetify"
     ]
 }

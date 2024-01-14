@@ -29,11 +29,11 @@ export default defineNuxtConfig({
   modules: [
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
+        // @ts-expect-error
         config.plugins.push(vuetify({ autoImport: true }))
       })
     },
     '@sidebase/nuxt-session',
-    // 'nuxt-aos',
     //...
   ],
   vite: {
@@ -41,6 +41,11 @@ export default defineNuxtConfig({
       template: {
         transformAssetUrls,
       },
+    },
+  },
+  session: {
+    session: {
+      expiryInSeconds: 10 * 60,
     }
   },
   css: ['~/assets/css/main.css'],

@@ -13,7 +13,7 @@
 <script setup>
 import { useTheme } from 'vuetify'
 import { useThemeChanges } from '@/composables/themeChanges'
-import { currentEvent, isDialogOpen, closeDialogAndSave, cancelCurrentProcess } from '~/store/dialogActions';
+import { currentEvent, isDialogOpen, closeDialogAndSave, cancelCurrentProcess } from '@/composables/dialogActions';
 const theme = useTheme()
 
 watch(() => theme.global.current.value.dark, (value) => {

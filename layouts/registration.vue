@@ -6,7 +6,7 @@
                 class="top-[50%] left-[50%] elevation-0 translate-x-[-50%] translate-y-[-50%] hover:scale-110 opacity-50 hover:opacity-100 transition-all elevation-3 ma-2"
                 cover max-width="50" max-height="50" />
         </div>
-        <v-main class="align-center d-flex justify-center">
+        <v-main>
             <slot></slot>
         </v-main>
     </v-app>

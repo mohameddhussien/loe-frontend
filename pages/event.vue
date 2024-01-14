@@ -62,9 +62,9 @@
 
 <script setup>
 import { getEventByID } from '~/server/api/getEventByID';
-import { openDialog, personCounter } from '~/store/dialogActions';
-import { hasToken } from '~/store/session';
-import { showSnackbar } from '@/composables/store/snackBarActions'
+import { openDialog, personCounter } from '@/composables/dialogActions';
+import { hasToken as authenticated } from '@/composables/store/session';
+import { showSnackbar } from '@/composables/snackBarActions'
 
 const event = ref((await getEventByID(useRoute().query.key)).data);
 const organizers = ref([
@@ -80,7 +80,7 @@ definePageMeta({
 })
 
 const auth = () => {
-    if (hasToken.value)
+    if (authenticated.value)
         openDialog(event.value)
     else {
         showSnackbar({ snackbarText: 'Prior to booking an event or trip, please ensure you have successfully logged in.', color: 'error' })

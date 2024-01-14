@@ -38,7 +38,7 @@
 <script setup>
 import { format } from 'date-fns';
 import { getAllEvents } from '~/server/api/getAllEvents';
-import { openDialog } from '~/store/dialogActions';
+import { openDialog } from '@/composables/dialogActions';
 
 const events = ref(await getAllEvents())
 

@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import { snackbarState, snackBarOptions } from '@/composables/store/snackBarActions'
+import { snackbarState, snackBarOptions } from '@/composables/snackBarActions'
 </script>
 
 <style lang="scss" scoped></style>
