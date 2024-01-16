@@ -38,11 +38,10 @@
                         </template>
                     </v-date-picker>
                 </v-menu>
-
                 <!-- Phone Number -->
                 <div class="d-flex">
-                    <v-combobox style="max-width: 105px;" class="ma-2" label="Code" item-title="c_name"
-                        item-value="c_code" :items="countryCodes.countries" variant="outlined">
+                    <v-combobox style="max-width: 105px;" class="ma-2" label="Code" item-title="c_name" item-value="c_code"
+                        :items="countryCodes.countries" variant="outlined">
                         <template #selection="{ item }">
                             <span>{{ item.value }}</span>
                         </template>
@@ -94,7 +93,6 @@ const registrationForm = {
 };
 const $v = useValidationObject(registrationForm).$v
 const countryCodes = await getCountryCodes();
-console.log(countryCodes.value)
 const handleSubmit = async () => {
     //  Validate form!!
     const response = await register(registrationForm);

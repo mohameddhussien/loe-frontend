@@ -4,7 +4,7 @@
             <slot name="summary">
                 {{ content?.split(/\s+/).slice(0, 25).join(' ') }}
             </slot>
-            <span v-show="!isExpanded">...</span>
+            <span v-show="!isExpanded">{{ alternativeText }}</span>
         <div v-show="isExpanded">
             <slot>
                 <span>{{ content?.split(/\s+/).slice(25).join(' ') }}</span>
@@ -21,7 +21,11 @@
 const props = defineProps({
     content: String,
     showText: String,
-    hideText: String
+    hideText: String,
+    alternativeText: {
+        type: String,
+        default: '...'
+    }
 })
 const isExpanded = ref(true);
 const toggleCtaLabel = computed(() =>

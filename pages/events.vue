@@ -26,8 +26,8 @@
                         <v-btn :disabled="statusMappings.some(mapping => event.STATUS in mapping)"
                             :to="{ path: `/event`, query: { key: event.EVENT_KEY } }" min-width="64%"
                             prepend-icon="mdi-book-outline">See details!</v-btn>
-                        <v-btn :disabled="statusMappings.some(mapping => event.STATUS in mapping)"
-                            @click="openDialog(event)" min-width="34%" prepend-icon="mdi-seat-outline">Book</v-btn>
+                        <v-btn :disabled="statusMappings.some(mapping => event.STATUS in mapping)" @click="auth(event)"
+                            min-width="34%" prepend-icon="mdi-seat-outline">Book</v-btn>
                     </v-btn-group>
                 </div>
             </v-col>
@@ -37,6 +37,7 @@
 
 <script setup>
 import { format } from 'date-fns';
+import { hasToken as authenticated } from '@/composables/store/session'
 import { getAllEvents } from '~/server/api/getAllEvents';
 import { openDialog } from '@/composables/dialogActions';
 
@@ -47,6 +48,16 @@ const getImageUrl = (status) => {
     const mapping = statusMappings.value.find(mapping => status in mapping);
     return mapping ? mapping[status] : null;
 };
+const auth = (event) => {
+    console.log(event)
+    if (authenticated.value)
+        openDialog(event)
+    else {
+        showSnackbar({ snackbarText: 'Prior to booking an event or trip, please ensure you have successfully logged in.', color: 'error' })
+        navigateTo('/login');
+    }
+}
+
 //  On window resize hide drawer
 const windowWidth = ref(window.innerWidth)
 const onWidthChange = () => windowWidth.value = window.innerWidth

@@ -16,7 +16,7 @@
                 </v-btn>
             </v-toolbar>
         </template>
-        <v-container>
+        <v-container class="mb-14">
             <v-row justify="center">
                 <SpecialTextDesign to-be-decorated="Booking Details"
                     color="before:border-y-2 pa-3 mb-8 before:-skew-x-[82deg] text-4xl my-5" />
@@ -62,7 +62,7 @@
                     </PersonDetails>
                     <v-btn :disabled="!adult.child || personCounter >= 10" variant="outlined" prepend-icon="mdi-baby"
                         @click="AddChildOfAdult(adult_index)">Add a Child</v-btn>
-                    <ExpandText show-text="Show Children Details" hide-text="Hide Children Details"
+                    <ExpandText show-text="Show Children Details" hide-text="Hide Children Details" :alternative-text="adult.children.length + ' Children'"
                         v-if="adult.children.length > 0" class="!w-full !block">
                         <div class="px-2 pt-2">
                             <PersonDetails @show-details="(value) => child.showDetails = value"
@@ -90,30 +90,43 @@
                 </v-col>
             </v-row>
         </v-container>
-        <v-container fluid :class="['pa-0 bottom-0 !sticky mt-auto transition-all', sheet.addClass, 'translate-y-[100%]']">
-            <v-row class="!absolute translate-y-[-50%] translate-x-[-50%] bottom-[100%] left-[50%]">
-                <v-btn class="hover:opacity-100 opacity-25 hover:!scale-[1.2]" @click="OpenBottomSheet" variant="outlined"
-                    icon="mdi-chevron-double-up"></v-btn>
-            </v-row>
-            <v-row class="bg-pink-lighten-1 font-sans font-medium" no-gutters>
-                <v-col class="pa-3 d-none d-sm-flex" cols="5" md="4">
-                    <SpecialTextDesign :to-be-decorated="`${(Children.details.length * (event.price /
-                        2)) + (event.price * (personCounter - Children.details.length)) + (Children.bus_price * Children.details.filter((obj) => obj.bus).length) + ((personCounter - Children.details.length) * 300) +
-                        (Children.food_price * Children.details.filter((obj) => obj.food).length) + ((personCounter - Children.details.length) * 150)}EGP`
-                        " color="before:border-b-2 ma-10 text-xxl pa-1 mb-8 before:-skew-x-[70deg] text-4xl my-5" />
-                </v-col>
-                <v-col v-if="Children.details.length" class="pa-3">
-                    <span>Children: {{ Children.details.length }}</span>
-                </v-col>
-                <v-col v-if="personCounter - Children.details.length" class="pa-3">
-                    <span>Adults: {{ personCounter - Children.details.length }}</span>
-                </v-col>
-            </v-row>
-        </v-container>
 
+        <!-- Bottom Navigation -->
+        <v-hover #default="{ isHovering, props }">
+            <v-bottom-navigation v-bind="props" :height="isHovering ? 300 : 30" :active="bottomNav">
+                <v-container fluid class="border">
+                    <v-row justify="center"><v-icon>mdi-arrow-up-circle</v-icon></v-row>
+                    <v-row>
+                        <v-col cols="12" md="4">
+                            <SpecialTextDesign :to-be-decorated="`${event.PRICE}EGP`" class="text-pink-accent-2"
+                                color="before:border-b-2 before:border-b-crayota-400 ma-10 pa-1 mb-8 before:-skew-x-[70deg] text-4xl my-5" />
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-bottom-navigation>
+        </v-hover>
     </CustomDialog>
 </template>
-
+<!-- <v-container fluid :class="['pa-0 bottom-0 !sticky mt-auto transition-all', sheet.addClass, 'translate-y-[100%]']">
+    <v-row class="!absolute translate-y-[-50%] translate-x-[-50%] bottom-[100%] left-[50%]">
+        <v-btn class="hover:opacity-100 opacity-25 hover:!scale-[1.2]" @click="OpenBottomSheet" variant="outlined"
+            icon="mdi-chevron-double-up"></v-btn>
+    </v-row>
+    <v-row class="bg-pink-lighten-1 font-sans font-medium" no-gutters>
+        <v-col class="pa-3 d-none d-sm-flex" cols="5" md="4">
+            <SpecialTextDesign :to-be-decorated="`${(Children.details.length * (event.price /
+                2)) + (event.price * (personCounter - Children.details.length)) + (Children.bus_price * Children.details.filter((obj) => obj.bus).length) + ((personCounter - Children.details.length) * 300) +
+                (Children.food_price * Children.details.filter((obj) => obj.food).length) + ((personCounter - Children.details.length) * 150)}EGP`
+                " color="before:border-b-2 ma-10 text-xxl pa-1 mb-8 before:-skew-x-[70deg] text-4xl my-5" />
+        </v-col>
+        <v-col v-if="Children.details.length" class="pa-3">
+            <span>Children: {{ Children.details.length }}</span>
+        </v-col>
+        <v-col v-if="personCounter - Children.details.length" class="pa-3">
+            <span>Adults: {{ personCounter - Children.details.length }}</span>
+        </v-col>
+    </v-row>
+</v-container> -->
 <script setup>
 import { personCounter } from '@/composables/dialogActions';
 const emits = defineEmits(['cancel', 'save'])
@@ -122,7 +135,7 @@ const props = defineProps({
     event: Object
 })
 const opened = ref(props.dialogOpen);
-
+const bottomNav = ref(true)
 
 const sheet = ref({
     opened: false,
@@ -141,20 +154,6 @@ const Adults = ref({
     food_price: 150,
     details: [{ name: "", age: "", contact: "", child: false, children: [], bus: false, food: false, showDetails: true }]
 })
-const OpenBottomSheet = (e) => {
-    sheet.value.opened = !sheet.value.opened;
-    if (sheet.value.opened) {
-        e.target.classList.remove('mdi-chevron-double-up')
-        e.target.classList.add('mdi-chevron-double-down')
-        sheet.value.addClass = 'translate-y-[0rem]';
-    }
-    else {
-        e.target.classList.remove('mdi-chevron-double-down');
-        e.target.classList.add('mdi-chevron-double-up');
-        sheet.value.addClass = '';
-    }
-    console.log(e.target.classList)
-}
 const AddChildOfAdult = (adult) => {
     if (personCounter.value < 10) {
         personCounter.value++

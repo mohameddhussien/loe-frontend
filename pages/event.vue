@@ -87,7 +87,6 @@ const auth = () => {
         showSnackbar({ snackbarText: 'Prior to booking an event or trip, please ensure you have successfully logged in.', color: 'error' })
         navigateTo('/login');
     }
-    /*  Open Snackbar   */
 }
 </script>
 <style lang="scss" scoped>
