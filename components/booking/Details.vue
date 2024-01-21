@@ -1,5 +1,5 @@
 <template>
-    <CustomDialog width="10000" :dialog-open="opened" @close="emits('cancel')" transition="dialog-bottom" :fullscreen="true"
+    <BaseDialog width="10000" :dialog-open="opened" @close="emits('cancel')" transition="dialog-bottom" :fullscreen="true"
         color="pink-accent-1">
         <template #title>
             <v-toolbar color="transparent">
@@ -33,8 +33,8 @@
             </v-row>
             <v-row class="gap-y-3">
                 <v-col cols="12" v-for="( adult, adult_index ) in  Adults.details" :key="adult_index">
-                    <PersonDetails @show-details="(value) => adult.showDetails = value" :person="adult" :index="adult_index"
-                        label="Adult">
+                    <BookingPersonDetails @show-details="(value) => adult.showDetails = value" :person="adult"
+                        :index="adult_index" label="Adult">
                         <template #options>
                             <v-checkbox v-show="adult.showDetails" density="compact" hide-details label="Bus"
                                 style="width: fit-content;" v-model="adult.bus" />
@@ -59,13 +59,14 @@
                         <v-select v-show="adult.showDetails" :disabled="!adult.food" clearable chips label="Available meals"
                             :items="['Breakfast Pie with Honey', 'Dinner meal (Chicken and Fried Potatoes)']"
                             variant="outlined" class="min-w-full" multiple></v-select>
-                    </PersonDetails>
+                    </BookingPersonDetails>
                     <v-btn :disabled="!adult.child || personCounter >= 10" variant="outlined" prepend-icon="mdi-baby"
                         @click="AddChildOfAdult(adult_index)">Add a Child</v-btn>
-                    <ExpandText show-text="Show Children Details" hide-text="Hide Children Details" :alternative-text="adult.children.length + ' Children'"
-                        v-if="adult.children.length > 0" class="!w-full !block">
+                    <ExpandText show-text="Show Children Details" hide-text="Hide Children Details"
+                        :alternative-text="adult.children.length + ' Children'" v-if="adult.children.length > 0"
+                        class="!w-full !block">
                         <div class="px-2 pt-2">
-                            <PersonDetails @show-details="(value) => child.showDetails = value"
+                            <BookingPersonDetails @show-details="(value) => child.showDetails = value"
                                 v-for="( child, child_index ) in adult.children" :key="child_index" :person="child"
                                 :index="child_index" label="Child">
                                 <template #options>
@@ -84,28 +85,14 @@
                                         </template>
                                     </v-hover>
                                 </template>
-                            </PersonDetails>
+                            </BookingPersonDetails>
                         </div>
                     </ExpandText>
                 </v-col>
             </v-row>
         </v-container>
-
-        <!-- Bottom Navigation -->
-        <v-hover #default="{ isHovering, props }">
-            <v-bottom-navigation v-bind="props" :height="isHovering ? 300 : 30" :active="bottomNav">
-                <v-container fluid class="border">
-                    <v-row justify="center"><v-icon>mdi-arrow-up-circle</v-icon></v-row>
-                    <v-row>
-                        <v-col cols="12" md="4">
-                            <SpecialTextDesign :to-be-decorated="`${event.PRICE}EGP`" class="text-pink-accent-2"
-                                color="before:border-b-2 before:border-b-crayota-400 ma-10 pa-1 mb-8 before:-skew-x-[70deg] text-4xl my-5" />
-                        </v-col>
-                    </v-row>
-                </v-container>
-            </v-bottom-navigation>
-        </v-hover>
-    </CustomDialog>
+        <BookingFooter :people="Adults" :event="event" />
+    </BaseDialog>
 </template>
 <!-- <v-container fluid :class="['pa-0 bottom-0 !sticky mt-auto transition-all', sheet.addClass, 'translate-y-[100%]']">
     <v-row class="!absolute translate-y-[-50%] translate-x-[-50%] bottom-[100%] left-[50%]">
@@ -135,24 +122,11 @@ const props = defineProps({
     event: Object
 })
 const opened = ref(props.dialogOpen);
-const bottomNav = ref(true)
-
-const sheet = ref({
-    opened: false,
-    addClass: ''
-})
-
-const Children = ref({
-    child: false,
-    bus_price: 200,
-    food_price: 120,
-    details: []
-})
 const Adults = ref({
     adult: false,
     bus_price: 300,
     food_price: 150,
-    details: [{ name: "", age: "", contact: "", child: false, children: [], bus: false, food: false, showDetails: true }]
+    details: [{ name: "", age: "", child: false, children: [], bus: false, food: false, showDetails: true }]
 })
 const AddChildOfAdult = (adult) => {
     if (personCounter.value < 10) {
@@ -186,4 +160,8 @@ watchEffect(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+* {
+    font-family: 'Rethink Sans', sans-serif;
+}
+</style>

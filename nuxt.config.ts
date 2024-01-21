@@ -23,6 +23,11 @@ export default defineNuxtConfig({
       mode: 'out-in' // default
     }
   },
+  components: [
+    { path: '~/components', pathPrefix: false },
+    { path: '~/components/booking', prefix: 'Booking', pathPrefix: false },
+    { path: '~/components/base', prefix: 'Base', pathPrefix: false }
+  ],
   build: {
     transpile: ['vuetify'],
   },
@@ -34,8 +39,22 @@ export default defineNuxtConfig({
       })
     },
     '@sidebase/nuxt-session',
+    '@nuxtjs/google-fonts',
     //...
   ],
+  googleFonts: {
+    preload: true,
+    preconnect: true,
+    display: 'swap',
+    useStylesheet: true,
+    families: {
+      Montserrat: [500],
+      'Rethink+Sans': {
+        ital: 1,
+        wght: [400]
+      }
+    }
+  },
   vite: {
     vue: {
       template: {
@@ -45,7 +64,7 @@ export default defineNuxtConfig({
   },
   session: {
     session: {
-      expiryInSeconds: 10 * 60,
+      expiryInSeconds: 1000 * 60,
     }
   },
   css: ['~/assets/css/main.css'],

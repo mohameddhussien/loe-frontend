@@ -13,4 +13,8 @@ import { useTheme } from 'vuetify/lib/framework.mjs';
 useTheme().global.name.value = 'light'
 </script>
 
-<style scoped></style>
+<style scoped>
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+</style>

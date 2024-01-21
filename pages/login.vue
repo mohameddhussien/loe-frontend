@@ -45,4 +45,8 @@ const handleSubmit = async () => {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+</style>

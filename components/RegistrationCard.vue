@@ -1,13 +1,13 @@
 <template>
     <v-container fluid class="pa-0 d-flex justify-center">
-        <v-sheet class="!shadow-lg" max-width="1200" width="100%">
+        <v-sheet rounded="xl" class="!shadow-lg" max-width="1200" width="100%">
             <v-row no-gutters>
                 <v-col cols="12" lg="5" md="6">
-                    <img :src="img_src" class="!w-full !h-full" />
+                    <img :src="img_src" class="!w-full !h-full rounded-s-md" />
                 </v-col>
                 <v-col cols="12" lg="7" md="6">
                     <v-card height="500" variant="flat"
-                        class="scroll-smooth overflow-auto mx-auto max-w-xl pa-6 bg-white rounded-md">
+                        class="scroll-smooth rounded-te-xl !min-w-full overflow-auto mx-auto max-w-xl pa-6 bg-white rounded-md">
                         <v-card-title class="!text-4xl !flex !items-center !justify-center !font-semibold mb-4">
                             {{ isLogin ? "Welcome Back!" : 'Hello There!' }}</v-card-title>
                         <v-card-subtitle class="!flex !items-center !justify-center !font-semibold mb-4">
@@ -17,7 +17,7 @@
                         <v-card-text>
                             <slot name="fields" :isLogin="isLogin"></slot>
                         </v-card-text>
-                        <v-footer class="d-flex justify-center">
+                        <v-footer class="d-flex flex-column justify-center">
                             <NuxtLink :to="isLogin ? '/register' : '/login'">
                                 <v-btn density="compact" variant="text" rounded
                                     class="hover:bg-[#F06292]  hover:border-[#F06292] hover:text-white">
@@ -42,4 +42,8 @@ const props = defineProps({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+</style>

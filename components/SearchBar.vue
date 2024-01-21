@@ -1,7 +1,7 @@
 
 
 <template>
-    <CustomDialog :elevate="0" color="transparent" width="700" :persistent="true" :dialog-open="opened"
+    <BaseDialog :elevate="0" color="transparent" width="700" :persistent="true" :dialog-open="opened"
         @close="emits('close')" transition="slide-y">
         <template #title>
             <v-autocomplete menu-icon="mdi-menu-swap-outline" v-model="searchtext" bg-color="#F06292" :hide-details="true"
@@ -20,7 +20,7 @@
             </v-autocomplete>
         </template>
         <div></div>
-    </CustomDialog>
+    </BaseDialog>
 </template>
 
 <script setup>
