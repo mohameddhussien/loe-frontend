@@ -44,17 +44,14 @@
         </v-app-bar-title>
         <v-card data-aos="slide-left" elevation="0" color="rgba(0,0,0,0)">
             <SearchBar :open-search-bar="openSearch" @close="openSearch = false" />
-            <v-card-actions>
+            <v-card-actions class="gap-x-2">
                 <v-switch @click="toggleTheme" v-model="theme.global.current.value.dark"
-                    class="align-self-center ma-1 d-none d-md-flex" inset color="pink-lighten-3" hide-details />
-                <v-btn @click="openSearch = true" icon="mdi-calendar-search" size="small" variant="outlined"
-                    class="border border-pink-darken-2 ma-1 hover:scale-105 hover:bg-[#F06292] hover:text-white" />
-                <v-btn variant="outlined" to="/register" v-if="!authenticated"
-                    class="d-md-flex d-none border border-pink-darken-2 ma-1 hover:scale-105  hover:bg-[#F06292] hover:text-white">Signup</v-btn>
-                <v-btn variant="outlined" to="/login" v-if="!authenticated"
-                    class="d-md-flex d-none border border-pink-darken-2 ma-1 hover:scale-105 hover:bg-[#F06292] hover:text-white">Login</v-btn>
-                <v-btn v-if="authenticated" @click="async () => await logout()" variant="outlined"
-                    class="d-md-flex d-none border border-pink-darken-2 ma-1 hover:scale-105 hover:bg-[#F06292] hover:text-white">Logout</v-btn>
+                    class="align-self-center ma-1 d-none d-md-flex" inset color="white" hide-details />
+                <my-btn @click="openSearch = true" icon="mdi-calendar-search" size="small" />
+                <my-btn to="/register" v-if="!authenticated" class="d-md-flex d-none">Signup</my-btn>
+                <my-btn to="/login" v-if="!authenticated" class="d-md-flex d-none">Login</my-btn>
+                <my-btn v-if="authenticated" @click="async () => await logout()"
+                    class="d-md-flex d-none !ma-1">Logout</my-btn>
             </v-card-actions>
         </v-card>
     </v-app-bar>

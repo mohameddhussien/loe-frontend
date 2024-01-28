@@ -26,7 +26,8 @@ export default defineNuxtConfig({
   components: [
     { path: '~/components', pathPrefix: false },
     { path: '~/components/booking', prefix: 'Booking', pathPrefix: false },
-    { path: '~/components/base', prefix: 'Base', pathPrefix: false }
+    { path: '~/components/base', prefix: 'Base', pathPrefix: false },
+    { path: '~/components/event components', pathPrefix: false },
   ],
   build: {
     transpile: ['vuetify'],

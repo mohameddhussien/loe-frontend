@@ -4,12 +4,11 @@
     <BaseDialog :elevate="0" color="transparent" width="700" :persistent="true" :dialog-open="opened"
         @close="emits('close')" transition="slide-y">
         <template #title>
-            <v-autocomplete menu-icon="mdi-menu-swap-outline" v-model="searchtext" bg-color="#F06292" :hide-details="true"
+            <v-autocomplete menu-icon="mdi-menu-swap-outline" v-model="searchtext" bg-color="pink-accent-2" :hide-details="true"
                 variant="solo" clear-icon="mdi-close-circle-outline" clearable rounded label="Search for a trip.."
                 :items="eventNames" return-object>
                 <template #prepend>
-                    <v-btn class="border border-pink-darken-2 ma-1 hover:scale-105 hover:bg-[#F06292] hover:text-white"
-                        @click="emits('close')" icon="mdi-close"></v-btn>
+                    <my-btn bg-color="pink-accent-1" @click="emits('close')" icon="mdi-close" />
                 </template>
                 <template #label="{ label }">
                     <span class="font-bold text-md font-sans">{{ label }}</span>

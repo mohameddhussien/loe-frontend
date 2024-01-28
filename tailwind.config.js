@@ -11,8 +11,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        'crayota-200': '#FF80AB',
-        'crayota-400': '#FF4081',
+        'crayota-200': '#FF9E80',
+        'crayota-400': '#FF7043',
       },
       // backgroundImage: {
       //   'light-pink-liquid': 'url("/light_pink_liquid_bg.gif")',

@@ -2,7 +2,7 @@
 <template>
   <v-container fluid>
     <SpecialTextDesign class="text-5xl text-center ma-5" before="Just" to-be-decorated="Announced!"
-      color="before:bg-crayota-200" />
+      color="bg-pink-accent-2" />
     <v-row justify="center" no-gutters>
       <v-col v-for="(event, key) in justAnnouncedEvents" :key="key" class="d-flex justify-center" xl="4" xxl="4" lg="4"
         md="6" cols="12">
@@ -19,9 +19,9 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row justify="center" class="flex flex-col bg-white">
-      <SpecialTextDesign class="text-5xl pt-5 text-center bg-white" before="Comming" to-be-decorated="Soon!"
-        color="before:bg-crayota-200" />
+    <v-row justify="center" class="flex flex-col bg-pink-accent-3">
+      <SpecialTextDesign class="text-5xl pt-5 text-center" before="Comming" to-be-decorated="Soon!"
+        color="bg-pink-accent-2" />
       <v-col>
         <v-carousel delimiter-icon="mdi-circle-outline" :touch="true" style="height: 600px;" hide-delimiter-background>
           <template #next="{ props }">

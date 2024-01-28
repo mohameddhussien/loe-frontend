@@ -1,6 +1,5 @@
 <template>
     <v-app class="bg-pink-lighten-5">
-        <!-- style="background: url('login_bg.gif') center center/cover repeat; " -->
         <RegistrationAppBar />
         <v-main>
             <slot></slot>

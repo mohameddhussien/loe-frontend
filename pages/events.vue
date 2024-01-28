@@ -12,11 +12,10 @@
                     </v-carousel>
                     <span class="font-sans d-flex justify-between">
                         <span class="font-bold text-xl">{{ event.EVENT_NAME }}</span>
-                        <SpecialTextDesign class="text-sm top-[-5px]"
-                            :color="[`before:bg-crayota-200 ${event.STATUS === 'Sold Out!' ? 'line-through' : ''}`]"
-                            :to-be-decorated="`${event.PRICE}EGP`" />
+                        <SpecialTextDesign class="text-md pa-1" :to-be-decorated="event.PRICE" after="EGP"
+                            :color="`bg-pink-accent-1 ${['Sold Out!', 'Coming Soon!'].includes(event.STATUS) ? 'line-through' : ''}`" />
                     </span>
-                    <span class="save-badge text-[rgb(128,0,0)] bg-[#f8dddd] d-flex gap-2">
+                    <span class="save-badge bg-pink-lighten-5 d-flex gap-2">
                         <v-icon icon="mdi-minus" size="small" />
                         <p>{{ event.STATUS }}</p>
                         <p class="ml-auto">{{ format(new Date(event.EVENT_DATE), 'dd-MM-yyyy') }}</p>

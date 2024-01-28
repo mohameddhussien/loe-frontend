@@ -2,7 +2,7 @@
     <blockquote class="text-2xl font-semibold italic">
         {{ before }}
         <span :class="[`before:block before:absolute before:-inset-1 before:-skew-y-3 relative inline-block`, color]">
-            <span class="relative text-white" v-bind="$attrs">{{ toBeDecorated }}</span>
+            <span class="relative text-white pa-1" v-bind="$attrs">{{ toBeDecorated }}</span>
         </span>
         {{ after }}
     </blockquote>
