@@ -9,6 +9,7 @@ export type Adult = {
     age: string;
     contact_mandatory: string;
     contact_optional: string;
+    email:string;
     children: Child[];
     bus: boolean;
     food: boolean;

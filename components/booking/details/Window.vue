@@ -12,7 +12,11 @@
 </template>
 
 <script lang="ts" setup>
-const bookingActions = useBooking()
+import type { Adult } from '~/types/person';
+
+const Adults = inject<Adult[]>('adults', []);
+const bookingActions = useBooking(Adults)
+
 </script>
 
 <style lang="scss" scoped></style>

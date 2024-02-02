@@ -1,16 +1,17 @@
 import type { Adult } from '~/types/person';
-const adult = ref<Adult>({
-    name: "",
-    age: "",
-    contact_mandatory: "",
-    contact_optional: "",
-    children: [],
-    bus: false,
-    food: false,
-    showDetails: false
-});
-export const useBooking = () => {
-    const Adults = inject<Adult[]>('adults', []);
+import { Adult as AdultClass } from '~/classes/person';
+// const adult = ref<Adult>({
+//     name: "",
+//     age: "",
+//     contact_mandatory: "",
+//     contact_optional: "",
+//     email: "",
+//     children: [],
+//     bus: false,
+//     food: false,
+//     showDetails: false
+// });
+export const useBooking = (Adults: Adult[]) => {
     // const AddChildOfAdult = (adult) => {
     //     if (personCounter.value < 10) {
     //         personCounter.value++
@@ -29,19 +30,40 @@ export const useBooking = () => {
     //     Adults.splice(index, 1)
     // }
     const AddAdult = () => {
+        const adult = new AdultClass();
         if (personCounter.value < 10) {
             personCounter.value++
-            Adults.push(adult.value)
+            Adults.push(adult);
         }
     }
-    const removeAdult = () => {
-        const lastAdultIndex = Adults.length - 1
-        personCounter.value -= (Adults[lastAdultIndex].children.length + 1)
-        Adults.pop()
-    }
+    // const removeAdult = () => {
+    //     const lastAdultIndex = Adults.length - 1
+    //     personCounter.value -= (Adults[lastAdultIndex].children.length + 1)
+    //     Adults.pop()
+    // }
+    const removeAdult: {
+        (adult: Adult, index: number): void;
+        // Overload 2: Arrow function with no parameters
+        (): void;
+    } = (
+            (adult?: Adult, index?: number): void => {
+                if (adult && index !== undefined) {
+                    personCounter.value -= adult.children.length + 1;
+                    console.log(Adults)
+                    Adults.splice(index, 1);
+
+                } else {
+                    const lastAdultIndex = Adults.length - 1;
+                    if (lastAdultIndex >= 0) {
+                        personCounter.value -= Adults[lastAdultIndex].children.length + 1;
+                        Adults.pop();
+                    }
+                }
+            }
+        );
+
     return {
         AddAdult,
-        removeAdult,
-        Adults
+        removeAdult
     }
 }
