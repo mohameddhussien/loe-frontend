@@ -17,6 +17,7 @@ export default defineNuxtPlugin((app) => {
                         'pink-accent-1': '#FF80AB',
                         'pink-lighten-5': '#FCE4EC',
                         'pink-lighten-4': '#F8BBD0',
+                        'pink-lighten-3': '#F48FB1',
                         'pink-lighten-1': '#EC407A',
                     }
                 },
@@ -28,6 +29,7 @@ export default defineNuxtPlugin((app) => {
                         'pink-accent-1': '#757575',
                         'pink-lighten-5': '#FAFAFA',
                         'pink-lighten-4': '#F5F5F5',
+                        'pink-lighten-3': '#EEEEEE',
                         'pink-lighten-1': '#BDBDBD',
                         'error': '#b80000'
                     }

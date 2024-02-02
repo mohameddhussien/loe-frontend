@@ -1,27 +1,30 @@
 <template>
     <v-container v-for="(adult, adultIndex) in Adults" :key="adultIndex">
         <v-row class="gap-x-2">
-            <Field v-model="adult.name" label="Name" class="max-w-[calc(70%)-1rem] ma-0" />
-            <Field v-model="adult.age" label="Age" class="max-w-[calc(100%-70%)] ma-0" />
+            <Field v-model="adult.name" label="Name" class="min-w-[calc(30%-1rem)] ma-0" />
+            <Field v-model="adult.age" label="Age" class="min-w-[calc(15%-1rem)] ma-0" />
             <Field v-model="adult.contact_mandatory" label="Contact 1" type="phone_number"
-                class="max-w-[calc(60%)-1rem] min-w-[200px] ma-0" />
+                class="min-w-[calc(40%-1rem)] ma-0" />
         </v-row>
         <v-row class="gap-x-2">
-            <Field v-model="adult.email" label="Email" type="email" hint="Optional"
-                class="max-w-[calc(60%)-1rem] min-w-[200px] ma-0" />
-            <Field v-model="adult.contact_optional" label="Contact 2" hint="Optional" type="phone_number"
-                class="max-w-[calc(100%-60%)] ma-0" />
+            <Field v-model="adult.email" label="Email" type="email" hint="Optional" class="min-w-[200px] ma-0" />
+            <Field v-model="adult.contact_optional" label="Contact 2" hint="Optional" type="phone_number" class="ma-0" />
 
         </v-row>
 
-        <v-row justify="space-between">
-            <v-item-group class=" gap-x-20 d-flex">
-                <v-checkbox v-model="adult.bus" label="Bus"></v-checkbox>
-                <v-checkbox label="Pool"></v-checkbox>
-                <v-checkbox v-model="adult.food" label="Food"></v-checkbox>
-            </v-item-group>
-
-            <MyBtn @click="bookingActions.removeAdult(adult, adultIndex)">Remove</MyBtn>
+        <v-row justify="space-evenly">
+            <v-col cols="3" md="3" xs="3" sm="3" lg="3" xl="3">
+                <v-checkbox v-model="adult.bus" label="Bus" />
+            </v-col>
+            <v-col cols="3" md="3" xs="3" sm="3" lg="3" xl="3">
+                <v-checkbox label="Pool" />
+            </v-col>
+            <v-col cols="3" md="3" xs="3" sm="3" lg="3" xl="3">
+                <v-checkbox v-model="adult.food" label="Food" />
+            </v-col>
+            <v-col cols="12" md="3" xs="3" sm="3" lg="3" xl="3" class="d-flex justify-end">
+                <my-btn @click="bookingActions.removeAdult(adult, adultIndex)">Remove</my-btn>
+            </v-col>
         </v-row>
     </v-container>
 </template>

@@ -1,4 +1,4 @@
- class Child {
+class Child {
     name: string;
     age: string;
     food: boolean;
@@ -12,7 +12,7 @@
     }
 }
 
- class Adult {
+class Adult {
     name: string;
     age: string;
     contact_mandatory: string;
@@ -36,5 +36,6 @@
     }
 }
 export {
-    Adult
+    Adult,
+    Child
 }
