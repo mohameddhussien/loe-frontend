@@ -3,9 +3,9 @@
         <!-- Login form fields go here -->
         <template #fields="{ isLogin }">
             <v-form @submit.prevent="handleSubmit" class="space-y-4">
-                <Field :fieldValue="loginForm.username" prependInnerIcon="mdi-account-box-outline" label="Username/Email"
+                <Field :value="loginForm.username" prependInnerIcon="mdi-account-box-outline" label="Username/Email"
                     type="username" />
-                <Field :fieldValue="loginForm.password" prependInnerIcon="mdi-lock-outline" label="Password"
+                <Field :value="loginForm.password" prependInnerIcon="mdi-lock-outline" label="Password"
                     type="password" />
                 <v-btn type="submit" variant="outlined" :loading="loading"
                     class="ma-2 hover:bg-[#F06292] hover:border-[#F06292] hover:text-white" block>

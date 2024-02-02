@@ -1,7 +1,7 @@
 <template>
     <v-hover #default="{ isHovering, props: hoverProps }">
         <v-btn @click="emits('click')" variant="outlined" v-bind="{ ...hoverProps, ...otherProps, ...$attrs }"
-            :class="{ 'border border-pink-darken-2 ma-0': true, [`scale-105 ${onHover}`]: isHovering, [`bg-${bgColor}`]: !isHovering }"
+            :class="{ 'ma-0': true, [`scale-105 ${onHover}`]: isHovering, [`bg-${bgColor}`]: !isHovering, 'border border-pink-darken-2': border }"
             :size="size" :icon="icon" :href="href" :to="to">
             <v-icon v-if="icon">{{ icon }}</v-icon>
             <slot />
@@ -29,6 +29,10 @@ const props = defineProps({
     onHover: {
         type: String,
         default: 'bg-pink-accent-2 text-white'
+    },
+    border: {
+        type: Boolean,
+        default: true
     }
 });
 </script>

@@ -48,13 +48,14 @@ const getImageUrl = (status) => {
     return mapping ? mapping[status] : null;
 };
 const auth = (event) => {
-    console.log(event)
-    if (authenticated.value)
-        openDialog(event)
-    else {
-        showSnackbar({ snackbarText: 'Prior to booking an event or trip, please ensure you have successfully logged in.', color: 'error' })
-        navigateTo('/login');
-    }
+    openDialog(event)
+    // console.log(event)
+    // if (authenticated.value)
+    //     openDialog(event)
+    // else {
+    //     showSnackbar({ snackbarText: 'Prior to booking an event or trip, please ensure you have successfully logged in.', color: 'error' })
+    //     navigateTo('/login');
+    // }
 }
 
 //  On window resize hide drawer

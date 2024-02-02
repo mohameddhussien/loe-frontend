@@ -1,5 +1,5 @@
 <template>
-    <v-data-table :hover="true" v-if="people[0]?.name !== ''" :items="people" :headers="headers" v-model:expanded="expanded"
+    <v-data-table :hover="true" :items="people" :headers="headers" v-model:expanded="expanded"
         show-expand items-per-page-text="" item-value="name">
         <template #item.sequential_number="{ index }">{{ index + 1 }}</template>
         <template #item.actions="{ item, index }">

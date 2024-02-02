@@ -4,19 +4,19 @@
         <template #fields="{ isLogin }">
             <v-form @submit.prevent="handleSubmit" class="space-y-4 d-flex justify-center flex-column">
                 <!-- Username -->
-                <Field :fieldValue="registrationForm.username" prependInnerIcon="mdi-account-box-outline" label="Username"
+                <Field :value="registrationForm.username" prependInnerIcon="mdi-account-box-outline" label="Username"
                     :validator="$v" type="username" />
                 <!-- Email -->
-                <Field :fieldValue="registrationForm.email" prependInnerIcon="mdi-mailbox-open-up-outline" label="E-mail"
+                <Field :value="registrationForm.email" prependInnerIcon="mdi-mailbox-open-up-outline" label="E-mail"
                     :validator="$v" type="email" />
                 <!-- Password -->
-                <Field :fieldValue="registrationForm.password" prependInnerIcon="mdi-lock-outline" label="Password"
+                <Field :value="registrationForm.password" prependInnerIcon="mdi-lock-outline" label="Password"
                     :validator="$v" type="password" />
                 <!-- First Name -->
-                <Field :fieldValue="registrationForm.first_name" prependInnerIcon="mdi-hail" label="First Name"
+                <Field :value="registrationForm.first_name" prependInnerIcon="mdi-hail" label="First Name"
                     :validator="$v" type="first_name" />
                 <!-- Last Name -->
-                <Field :fieldValue="registrationForm.last_name" prependInnerIcon="mdi-account-tie" label="First Name"
+                <Field :value="registrationForm.last_name" prependInnerIcon="mdi-account-tie" label="First Name"
                     :validator="$v" type="last_name" />
 
                 <v-textarea v-model="registrationForm.address.value" class="ma-2" variant="outlined"
@@ -46,7 +46,7 @@
                             <span>{{ item.value }}</span>
                         </template>
                     </v-combobox>
-                    <Field :fieldValue="registrationForm.phone_number" prependInnerIcon="mdi-cellphone" label="Phone Number"
+                    <Field :value="registrationForm.phone_number" prependInnerIcon="mdi-cellphone" label="Phone Number"
                         :validator="$v" type="phone_number" hint="Example: 0100 123 4567">
                     </Field>
                 </div>

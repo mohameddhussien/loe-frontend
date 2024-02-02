@@ -1,6 +1,6 @@
 <template>
-    <v-text-field :hint="hint" v-model="field" :prependInnerIcon="prependInnerIcon" class="ma-2" variant="outlined"
-        :label="label" :type="type" :clearable="true">
+    <v-text-field :hint="hint" :prependInnerIcon="prependInnerIcon" class="ma-2" variant="outlined"
+        :label="label" :type="type" ref="field" :model-value="value?.value" @update:model-value="emits('input', value?.value)" :clearable="true">
         <template v-slot:append-inner>
             <CustomTooltip iconColor="pink-darken-1" v-if="validator && checkInvalid(validator)"
                 :message="validator && getMessage(getField(validator))" icon="mdi-alert-circle" />
@@ -12,8 +12,9 @@
 interface ValidatorObject {
     [key: string]: any; // Index signature allowing any string key
 }
+const emits = defineEmits(['input'])
 const props = defineProps({
-    fieldValue: Object as () => Ref<string>,
+    value: Object as () => Ref<string>,
     prependInnerIcon: String,
     label: String,
     type: String,
@@ -64,7 +65,7 @@ const getMessage = (field: any): string | undefined => {
     return undefined;
 };
 
-const field = ref(props.fieldValue)
+const field = ref(props.value)
 const $v = ref(props.validator)
 
 
@@ -72,7 +73,7 @@ const $v = ref(props.validator)
 watch(() => props.validator, (newValidator) => {
     $v.value = newValidator;
 });
-watch(() => props.fieldValue, (newField) => {
+watch(() => props.value, (newField) => {
     field.value = newField?.value
 });
 </script>

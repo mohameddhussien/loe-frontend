@@ -12,7 +12,7 @@
                     text="Confirm" />
             </v-toolbar>
         </template>
-        <v-container class="mb-14">
+        <!-- <v-container class="mb-14">
             <v-row no-gutters justify="center">
                 <SpecialTextDesign to-be-decorated="Booking Details"
                     color="before:border-y-2 pa-3 mb-8 before:-skew-x-[82deg] text-4xl my-5" />
@@ -26,7 +26,7 @@
                 </div>
             </v-row>
             <v-row no-gutters class="gap-y-3">
-                <v-col cols="12" v-for="( adult, adult_index ) in  Adults.details" :key="adult_index">
+                <v-col cols="12" v-for="( adult, adult_index ) in  Adults" :key="adult_index">
                     <BookingPersonDetails @show-details="(value) => adult.showDetails = value" :person="adult"
                         :index="adult_index" label="Adult">
                         <template #options>
@@ -70,52 +70,57 @@
                     </BookingPersonDetails>
                 </v-col>
             </v-row>
-        </v-container>
-        <BookingFooter :people="Adults" :event="event" @delete="(person, index) => removeAdult(person, index)" />
+        </v-container> -->
+        <BookingWindowContent></BookingWindowContent> 
+        <!-- @delete="(person, index) => removeAdult(person, index)" -->
+        <BookingFooter :people="Adults" :event="event" />
     </BaseDialog>
 </template>
-<script setup>
+<script lang="ts" setup>
 import { personCounter } from '@/composables/dialogActions';
+import type { Adult } from '@/types/person'
 const emits = defineEmits(['cancel', 'save'])
 const props = defineProps({
     dialogOpen: Boolean,
     event: Object
 })
 const opened = ref(props.dialogOpen);
-const Adults = ref({
-    adult: false,
-    bus_price: 300,
-    food_price: 150,
-    details: [{ name: "", age: "", child: false, children: [], bus: false, food: false, showDetails: true }]
-})
-const AddChildOfAdult = (adult) => {
-    if (personCounter.value < 10) {
-        personCounter.value++
-        Adults.value.details[adult].children.push({ name: "", age: "", bus: false, food: false, showDetails: true })
-    }
-}
-const removeChildOfAdult = (adult, child) => {
-    personCounter.value--
-    Adults.value.details[adult].children.splice(child, 1)
-}
-const AddAdult = () => {
-    if (personCounter.value < 10) {
-        personCounter.value++
-        Adults.value.details.push({ name: "", age: "", contact: "", children: [], bus: false, food: false })
-    }
-}
-const removeAdult = (adult, index) => {
-    console.log(adult,index)
-    if (!adult) {
-        const lastAdultIndex = Adults.value.details.length - 1
-        personCounter.value -= (Adults.value.details[lastAdultIndex].children.length + 1)
-        Adults.value.details.pop()
-    }
-    else {
-        personCounter.value -= adult.children.length + 1
-        Adults.value.details.splice(index, 1)
-    }
-}
+
+const Adults = reactive<Adult[]>([
+  { name: "", age: "", contact_mandatory: '', contact_optional: '', children: [], bus: false, food: false, showDetails: true }
+]);
+provide('adults', Adults)
+// const AddChildOfAdult = (adult) => {
+//     if (personCounter.value < 10) {
+//         personCounter.value++
+//         Adults[adult].children.push({ name: "", age: "", bus: false, food: false, showDetails: true })
+//     }
+// }
+
+// const removeChildOfAdult = (adult, child) => {
+//     personCounter.value--
+//     Adults[adult].children.splice(child, 1)
+// }
+
+// const AddAdult = () => {
+//     if (personCounter.value < 10) {
+//         personCounter.value++
+//         Adults.push({ name: "", age: "", contact: "", children: [], bus: false, food: false })
+//     }
+// }
+
+// const removeAdult = (adult, index) => {
+//     console.log(adult, index)
+//     if (!adult) {
+//         const lastAdultIndex = Adults.length - 1
+//         personCounter.value -= (Adults[lastAdultIndex].children.length + 1)
+//         Adults.pop()
+//     }
+//     else {
+//         personCounter.value -= adult.children.length + 1
+//         Adults.splice(index, 1)
+//     }
+// }
 watchEffect(() => {
     opened.value = props.dialogOpen;
 });

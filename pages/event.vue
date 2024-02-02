@@ -58,12 +58,13 @@ const decrementPersonCounter = () => {
     personCounter.value > 1 ? personCounter.value-- : personCounter.value = personCounter.value;
 };
 const openBookingDetails = () => {
-    if (authenticated.value)
-        openDialog(event.value)
-    else {
-        showSnackbar({ snackbarText: 'Prior to booking an event or trip, please ensure you have successfully logged in.', color: 'error' })
-        navigateTo('/login');
-    }
+    openDialog(event.value)
+    // if (authenticated.value)
+    //     openDialog(event.value)
+    // else {
+    //     showSnackbar({ snackbarText: 'Prior to booking an event or trip, please ensure you have successfully logged in.', color: 'error' })
+    //     navigateTo('/login');
+    // }
 }
 </script>
 <style lang="scss" scoped></style>
