@@ -71,13 +71,13 @@
                 </v-col>
             </v-row>
         </v-container> -->
-        <BookingSteppers></BookingSteppers> 
+        <BookingSteppers></BookingSteppers>
         <!-- @delete="(person, index) => removeAdult(person, index)" -->
         <BookingFooter :people="Adults" :event="event" />
     </BaseDialog>
 </template>
 <script lang="ts" setup>
-import type { Adult } from '@/types/person'
+import { Adult } from '@/classes/person'
 const emits = defineEmits(['cancel', 'save'])
 const props = defineProps({
     dialogOpen: Boolean,
@@ -86,7 +86,7 @@ const props = defineProps({
 const opened = ref(props.dialogOpen);
 
 const Adults = reactive<Adult[]>([
-  { name: "", age: "", contact_mandatory: '', contact_optional: '', children: [], bus: false, food: false, showDetails: true }
+    { name: "", age: "", contact_mandatory: '', contact_optional: '', email: "", children: [], bus: false, food: false, showDetails: true }
 ]);
 provide('adults', Adults)
 

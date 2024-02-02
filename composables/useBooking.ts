@@ -1,5 +1,4 @@
-import type { Adult } from '~/types/person';
-import { Adult as AdultClass } from '~/classes/person';
+import { Adult } from '~/classes/person';
 // const adult = ref<Adult>({
 //     name: "",
 //     age: "",
@@ -30,7 +29,7 @@ export const useBooking = (Adults: Adult[]) => {
     //     Adults.splice(index, 1)
     // }
     const AddAdult = () => {
-        const adult = new AdultClass();
+        const adult = new Adult();
         if (personCounter.value < 10) {
             personCounter.value++
             Adults.push(adult);

@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { Adult } from '~/types/person';
+import { Adult } from '@/classes/person';
 
 const Adults = inject<Adult[]>('adults', []);
 const bookingActions = useBooking(Adults)
