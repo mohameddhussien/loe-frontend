@@ -71,13 +71,12 @@
                 </v-col>
             </v-row>
         </v-container> -->
-        <BookingWindowContent></BookingWindowContent> 
+        <BookingSteppers></BookingSteppers> 
         <!-- @delete="(person, index) => removeAdult(person, index)" -->
         <BookingFooter :people="Adults" :event="event" />
     </BaseDialog>
 </template>
 <script lang="ts" setup>
-import { personCounter } from '@/composables/dialogActions';
 import type { Adult } from '@/types/person'
 const emits = defineEmits(['cancel', 'save'])
 const props = defineProps({
@@ -90,37 +89,7 @@ const Adults = reactive<Adult[]>([
   { name: "", age: "", contact_mandatory: '', contact_optional: '', children: [], bus: false, food: false, showDetails: true }
 ]);
 provide('adults', Adults)
-// const AddChildOfAdult = (adult) => {
-//     if (personCounter.value < 10) {
-//         personCounter.value++
-//         Adults[adult].children.push({ name: "", age: "", bus: false, food: false, showDetails: true })
-//     }
-// }
 
-// const removeChildOfAdult = (adult, child) => {
-//     personCounter.value--
-//     Adults[adult].children.splice(child, 1)
-// }
-
-// const AddAdult = () => {
-//     if (personCounter.value < 10) {
-//         personCounter.value++
-//         Adults.push({ name: "", age: "", contact: "", children: [], bus: false, food: false })
-//     }
-// }
-
-// const removeAdult = (adult, index) => {
-//     console.log(adult, index)
-//     if (!adult) {
-//         const lastAdultIndex = Adults.length - 1
-//         personCounter.value -= (Adults[lastAdultIndex].children.length + 1)
-//         Adults.pop()
-//     }
-//     else {
-//         personCounter.value -= adult.children.length + 1
-//         Adults.splice(index, 1)
-//     }
-// }
 watchEffect(() => {
     opened.value = props.dialogOpen;
 });

@@ -14,9 +14,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { Adult } from '@/types/person'
-
-const Adults = inject<Adult[]>('adults', []);
+const Adults = useBooking().Adults;
+console.log(Adults)
 </script>
 
 <style lang="scss" scoped></style>
