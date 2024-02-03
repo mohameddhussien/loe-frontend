@@ -23,7 +23,7 @@
                 <v-checkbox v-model="adult.food" label="Food" />
             </v-col>
             <v-col cols="12" md="3" xs="3" sm="3" lg="3" xl="3" class="d-flex justify-end">
-                <my-btn @click="bookingActions.removeAdult(adult, adultIndex)">Remove</my-btn>
+                <my-btn class="bg-red-darken-4" on-hover="bg-red-accent-2" @click="bookingActions.removeAdult(adult, adultIndex)">Remove ⊗</my-btn>
             </v-col>
         </v-row>
     </v-container>
