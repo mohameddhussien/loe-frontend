@@ -11,8 +11,8 @@ const login = async (formData) => {
         baseURL: useRuntimeConfig().public.baseURL,
         method: 'post',
         body: {
-            'username': formData.username.value,
-            'password': formData.password.value
+            'username': formData.username,
+            'password': formData.password
         }
     })
     loading.value = false
@@ -24,12 +24,12 @@ const register = async (formData) => {
         baseURL: useRuntimeConfig().public.baseURL,
         method: 'post',
         body: {
-            "username": formData.username.value,
-            "first_name": formData.first_name.value,
-            "last_name": formData.last_name.value,
-            "email": formData.email.value,
-            "password": formData.password.value,
-            "confirmpass": formData.password.value
+            "username": formData.username,
+            "first_name": formData.first_name,
+            "last_name": formData.last_name,
+            "email": formData.email,
+            "password": formData.password,
+            "confirmpass": formData.password
         }
     })
     loading.value = false

@@ -1,10 +1,11 @@
 <template>
-    <v-text-field :hint="hint" :prependInnerIcon="prependInnerIcon" class="ma-2" variant="outlined"
-        :label="label" :type="type" ref="field" :model-value="value?.value" @update:model-value="emits('input', value?.value)" :clearable="true">
+    <v-text-field :hint="hint" :prependInnerIcon="prependInnerIcon" class="ma-2" variant="outlined" :label="label"
+        :type="type" :model-value="value" @update:model-value="emits('update:modelValue', $event)" :clearable="true">
         <template v-slot:append-inner>
             <CustomTooltip iconColor="pink-darken-1" v-if="validator && checkInvalid(validator)"
                 :message="validator && getMessage(getField(validator))" icon="mdi-alert-circle" />
         </template>
+        <!-- <v-text-field :model-value="value?.value" @update:model-value="emits('input', value?.value)" /> -->
     </v-text-field>
 </template>
 
@@ -12,9 +13,9 @@
 interface ValidatorObject {
     [key: string]: any; // Index signature allowing any string key
 }
-const emits = defineEmits(['input'])
+const emits = defineEmits(['update:modelValue'])
 const props = defineProps({
-    value: Object as () => Ref<string>,
+    value: [String, Number, Boolean, Object, Array, null] as PropType<any>,
     prependInnerIcon: String,
     label: String,
     type: String,
@@ -27,6 +28,9 @@ const props = defineProps({
         default: null
     }
 })
+
+const field = ref(props.value)
+const $v = ref(props.validator)
 
 const getField = (validator: ValidatorObject) => {
     const field = props.type && validator[props.type];
@@ -64,9 +68,6 @@ const getMessage = (field: any): string | undefined => {
     // Default return value if no error message is found
     return undefined;
 };
-
-const field = ref(props.value)
-const $v = ref(props.validator)
 
 
 // Watch for changes in the props.validator and update $v ref accordingly
