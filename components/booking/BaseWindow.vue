@@ -9,8 +9,7 @@
 const props = defineProps({
     title: String
 })
+
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

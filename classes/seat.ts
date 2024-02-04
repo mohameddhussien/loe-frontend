@@ -20,15 +20,7 @@ class Seat {
         this.icon = '';
         this.isSelected = false;
         this.isTaken = Math.random() < 0.5;
-        
         this.seatType = seatType;
-    }
-    getRandomLabel(): string {
-        const rows = ['A', 'B', 'C', 'D'];
-        const randomRow = rows[Math.floor(Math.random() * rows.length)]; // Select a random row
-        const randomColumn = Math.floor(Math.random() * 13) + 1; // Generate a random column in the range [1, 13]
-
-        return `${randomRow}${randomColumn}`;
     }
 }
 export {

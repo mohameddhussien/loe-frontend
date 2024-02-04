@@ -1,11 +1,11 @@
 <template>
     <v-container fluid>
-        <v-stepper flat :items="['Booking Details', 'Bus Reservation', 'Other Activities']">
+        <v-stepper :mobile="mobile" flat :items="['Booking Details', 'Bus Reservation', 'Other Activities']">
             <template #item.1>
                 <BookingDetailsWindow />
             </template>
             <template #item.2>
-                <BusReservationWindow />
+                <BusReservationWindow :class="customClass" />
             </template>
             <template #item.3>
                 <h1 class="text-4xl font-bold mb-4">Other Activities</h1>
@@ -26,6 +26,30 @@
 </template>
 
 <script lang="ts" setup>
+const mobile = ref(false)
+const spacing = ref(false)
+const customClass = {
+    'border ma-0 pa-0': spacing.value
+}
+const handleResize = () => {
+    const WindowSize = window.innerWidth
+    if (WindowSize <= 600)
+        mobile.value = true
+    else
+        mobile.value = false
+    if (WindowSize <= 480)
+        spacing.value = true
+    else
+        spacing.value = false
+};
+
+onMounted(() => {
+    window.addEventListener('resize', handleResize);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('resize', handleResize);
+});
 </script>
 
 <style scoped>
