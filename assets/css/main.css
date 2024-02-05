@@ -23,4 +23,24 @@ body {
     background: var(--sb-thumb-color);
     border-radius: 6px;
     border: 1px solid #ffb9f4;
+
+}
+
+:root {
+    --stepper-margin: 0;
+    --stepper-padding: 10px;
+}
+
+@media (min-width: 800px) {
+    :root {
+        --stepper-margin: 20px;
+        --stepper-padding: 16px
+    }
+}
+
+.v-window.v-theme--light.v-stepper-window {
+    margin: var(--stepper-margin);
+}
+div.v-container>.v-locale>.--is-ltr{
+    padding: var(--stepper-padding);
 }

@@ -18,7 +18,7 @@ const useBus = () => {
         if (!seat)
             return;
         return {
-            'mb-1 max-[465px]:scale-[0.8]': true,
+            'mb-1': true,
             'bg-green-lighten-2': seat.isSelected,
         }
     }

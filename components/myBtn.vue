@@ -8,11 +8,11 @@
         </v-btn>
     </v-hover>
 </template>
-<script setup>
+<script lang="ts" setup>
 const emits = defineEmits(['click'])
 const props = defineProps({
     size: {
-        type: String,
+        type: [String, Number] as PropType<any>,
         default: 'default',
     },
     icon: {
