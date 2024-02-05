@@ -1,11 +1,11 @@
 <template>
-    <v-container fluid>
+    <v-container class="mb-8" fluid>
         <v-stepper :mobile="mobile" flat :items="['Booking Details', 'Bus Reservation', 'Other Activities']">
             <template #item.1>
                 <BookingDetailsWindow />
             </template>
             <template #item.2>
-                <BusReservationWindow :class="customClass" />
+                <ReservationWindow :class="customClass" />
             </template>
             <template #item.3>
                 <h1 class="text-4xl font-bold mb-4">Other Activities</h1>

@@ -6,13 +6,16 @@ function rowIndex(seat: Seat): number {
 }
 const takenSeats = ref(0)
 const busCapacity = ref<SeatIndices>({ deckIndex: 1, seatIndex: 1 })
+let defaultSeats = Array.from({ length: busCapacity.value.deckIndex }, (_, i) =>
+    Array.from({ length: busCapacity.value.seatIndex }, (_, j) => new Seat(String.fromCharCode(65 + i), j))
+);
+
 const useBus = () => {
-    const defaultSeats = Array.from({ length: busCapacity.value.deckIndex }, (_, i) =>
+    const seats = ref(Array.from({ length: busCapacity.value.deckIndex }, (_, i) =>
         Array.from({ length: busCapacity.value.seatIndex }, (_, j) => new Seat(String.fromCharCode(65 + i), j))
-    );
+    ));
     // const transposedSeats = defaultSeats[0].map((_, colIndex) => defaultSeats.map(row => row[colIndex]));
     // const seats = ref<Seat[][]>(window.innerWidth <= 1282 ? transposedSeats : defaultSeats);
-    const seats = ref<Seat[][]>(defaultSeats);
     //Get type of bus from composable to change the default seats array length
     const customClass = (seat?: Seat) => {
         if (!seat)
@@ -45,10 +48,12 @@ const useBus = () => {
     const getBgColor = (seat?: Seat): string => {
         if (!seat)
             return "";
+        seat.bgColor = 'red-lighten-2'
         if (seat.isTaken)
-            return 'red-lighten-2';
+            return seat.bgColor;
 
-        return seat.isSelected ? 'green' : 'white';
+        seat.bgColor = seat.isSelected ? 'green' : 'white';
+        return seat.bgColor
     };
 
     const selectSeat = (seat?: Seat) => {
@@ -78,9 +83,9 @@ const useBus = () => {
         customHover,
         getBgColor,
         selectSeat,
+        seats,
         takenSeats,
         // handleResize,
-        seats
     }
 }
 export {

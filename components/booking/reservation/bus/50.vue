@@ -14,16 +14,25 @@ const isNotSeat50 = (seat: Seat): boolean => {
         deckIndex: rowIndex(seat),
         seatIndex: seat.column
     };
+    const isNotSeat = ref<boolean>(false)
     const deckIndex = seatIndices.deckIndex;
     const seatIndex = seatIndices.seatIndex;
-    if (deckIndex === 0 && seatIndex === 0) {
-        seat.isTaken = true
-        seat.label = 'D'
-    }
-
-    return (deckIndex === 0 && (seatIndex >= 1 && seatIndex < 4)) ||
+    isNotSeat.value = (deckIndex === 0 && (seatIndex >= 1 && seatIndex < 4)) ||
         (seatIndex === 2 && deckIndex !== 13) ||
         ((deckIndex === 6 || deckIndex === 7) && (seatIndex === 3 || seatIndex === 4))
+    if (deckIndex === 0 && seatIndex === 0) {
+        seat.isTaken = true
+        seat.icon = 'mdi-bus'
+        seat.label = ''
+    }
+    if (deckIndex === 0 && seatIndex === 4) {
+        seat.isTaken = true
+        seat.icon = 'mdi-account-multiple'
+        seat.label = ''
+    }
+    if (isNotSeat.value)
+        seat.label = ''
+    return isNotSeat.value
 };
 </script>
 
