@@ -45,7 +45,6 @@ const opened = ref(props.dialogOpen);
 
 watchEffect(() => {
     opened.value = props.dialogOpen;
-    console.log(opened.value)
 });
 </script>
 

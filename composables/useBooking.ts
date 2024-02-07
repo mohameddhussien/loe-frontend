@@ -34,7 +34,6 @@ export const useBooking = (Adults: Adult[]) => {
     const removeSpecificAdult = (adult: Adult, index: number): void => {
         const removedChildrenCount = adult.children.length + 1;
         personCounter.value -= removedChildrenCount;
-        console.log(Adults);
         Adults.splice(index, 1);
     };
 

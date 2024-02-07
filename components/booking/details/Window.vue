@@ -13,10 +13,8 @@
 
 <script lang="ts" setup>
 import { Adult } from '@/classes/person';
-
 const Adults = inject<Adult[]>('adults', []);
 const bookingActions = useBooking(Adults)
-
 </script>
 
 <style lang="scss" scoped></style>

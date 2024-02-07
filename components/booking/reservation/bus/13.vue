@@ -1,5 +1,5 @@
 <template>
-    <BusReservationBase #default="{ seat }">
+    <BusReservationBase :seats="busActions.seats" #default="{ seat }">
         <BusReservationSeat :is-not-seat="isNotSeat13" :seat="seat" />
     </BusReservationBase>
 </template>
@@ -8,21 +8,42 @@
 import { Seat } from '~/classes/seat';
 import type { SeatIndices } from '~/interfaces/SeatIndices';
 busCapacity.value = { deckIndex: 6, seatIndex: 4 }
+const busActions = useBus()
+createSeatsArray(isNotSeat13, busCapacity.value)
 
-const isNotSeat13 = (seat: Seat): boolean => {
+function notSeat(seat: Seat): boolean {
     const seatIndices: SeatIndices | undefined = {
-        deckIndex: rowIndex(seat),
+        deckIndex: seat.row,
+        seatIndex: seat.column
+    };
+
+    const deckIndex = seatIndices.deckIndex;
+    const seatIndex = seatIndices.seatIndex;
+
+    return (deckIndex === 0 && (seatIndex >= 1 && seatIndex <= 2)) ||
+        (deckIndex === 1) || (deckIndex === 2 && (seatIndex >= 2 && seatIndex <= 3))
+        || (deckIndex >= 3 && deckIndex <= 4 && seatIndex === 2);
+}
+
+function isNotSeat13(seat: Seat): boolean {
+    const seatIndices: SeatIndices | undefined = {
+        deckIndex: seat.row,
         seatIndex: seat.column
     };
     const deckIndex = seatIndices.deckIndex;
     const seatIndex = seatIndices.seatIndex;
-    if (deckIndex === 0 && seatIndex === 0) {
+    const isNotSeat = ref<boolean>(false)
+    isNotSeat.value = notSeat(seat)
+    if (deckIndex === 0 && seatIndex === 3) {
         seat.isTaken = true
-        seat.label = 'D'
+        seat.icon = 'mdi-account-multiple'
+        seat.label = ''
     }
-    return (deckIndex === 0 && (seatIndex >= 1 && seatIndex <= 2)) ||
-        (deckIndex === 1) || (deckIndex === 2 && (seatIndex >= 2 && seatIndex <= 3))
-        || (deckIndex >= 3 && deckIndex <= 4 && seatIndex === 2);
+    if (isNotSeat.value) {
+        seat.disabled = true
+        seat.label = ''
+    }
+    return isNotSeat.value
 };
 </script>
 

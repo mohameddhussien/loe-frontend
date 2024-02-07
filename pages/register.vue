@@ -95,7 +95,6 @@ let $v = '';
 const countryCodes = await getCountryCodes();
 const handleSubmit = async () => {
     $v = useVuelidate(useValidationObject, registrationForm)
-    console.log("Validation Object: ", $v.value)
     //  Validate form!!
     const response = await register(registrationForm);
     const responseKey = Object.keys(response.value)[0];

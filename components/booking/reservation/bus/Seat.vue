@@ -1,8 +1,9 @@
 <template>
-    <my-btn :ripple="!seat?.isTaken" :size="size" @click="useBusActions.selectSeat(seat)"
+    <my-btn :ripple="!seat?.isTaken && !seat?.isDriver" :size="size" @click="useBusActions.selectSeat(seat)"
         :on-hover="useBusActions.customHover(seat)" :bg-color="disabled ? 'transparent' : useBusActions.getBgColor(seat)"
-        :disabled="disabled" :class="{ ...useBusActions.customClass(seat) }" :prepend-icon="seat?.icon">{{
-            seat?.label }}</my-btn>
+        :disabled="disabled" :icon="seat?.icon" :class="{ ...useBusActions.customClass(seat), '!border !border-black/20': true }">
+        {{ seat?.label }}
+    </my-btn>
 </template>
 
 <script lang="ts" setup>

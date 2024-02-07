@@ -5,20 +5,23 @@ class Seat {
     label: string;
     icon: string;
     isSelected: boolean;
+    isDriver: boolean;
     isTaken: boolean;
-    row: string;
+    row: number;
     column: number;
     seatType: 'standard' | 'premium' | 'vip';
 
-    constructor(row: string, column: number, seatType: 'standard' | 'premium' | 'vip' = 'standard') {
+    constructor(row: number, column: number, seatType: 'standard' | 'premium' | 'vip' = 'standard') {
+        const isDriver = row === 0 && column === 0
         this.bgColor = 'bg-white';
         this.color = '';
         this.disabled = false;
         this.row = row;
         this.column = column;
-        this.label = `${this.row}${this.column}`;
-        this.icon = '';
+        this.label = '';
+        this.icon = isDriver ? 'mdi-bus' : '';
         this.isSelected = false;
+        this.isDriver = isDriver;
         this.isTaken = Math.random() < 0.5;
         this.seatType = seatType;
     }

@@ -11,9 +11,6 @@ const checkDefault = () => {
 const openDialog = (data) => {
     currentEvent.value = data;
     isDialogOpen.value = true;
-    console.log("Dialog Opened: ", isDialogOpen.value)
-    console.log("Current Event: ", currentEvent.value)
-
 };
 
 // Function to close the dialog and save

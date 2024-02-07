@@ -1,41 +1,41 @@
 import { Seat } from '@/classes/seat'
 import type { SeatIndices } from '@/interfaces/SeatIndices'
-function rowIndex(seat: Seat): number {
-    const charCodeA = 'A'.charCodeAt(0);  // Get the character code of 'A'
-    return seat.row.charCodeAt(0) - charCodeA; // Subtract to get the zero-based index
-}
 const takenSeats = ref(0)
 const busCapacity = ref<SeatIndices>({ deckIndex: 1, seatIndex: 1 })
-let defaultSeats = Array.from({ length: busCapacity.value.deckIndex }, (_, i) =>
-    Array.from({ length: busCapacity.value.seatIndex }, (_, j) => new Seat(String.fromCharCode(65 + i), j))
-);
-
+// let defaultSeats = Array.from({ length: busCapacity.value.deckIndex }, (_, i) =>
+//     Array.from({ length: busCapacity.value.seatIndex }, (_, j) => new Seat(String.fromCharCode(65 + i), j))
+// );
+const seats = ref<Seat[][]>([]);
+export const createSeatsArray = (notSeat: (seat: Seat) => boolean, busCapacity: SeatIndices) => {
+    let seatCounter: number = 0
+    seats.value = Array.from({ length: busCapacity.deckIndex }, (_, i) => {
+        const decks = ref<Seat[]>([])
+        decks.value = Array.from({ length: busCapacity.seatIndex }, (_, j) => {
+            const mySeat = new Seat(i, j)
+            if (notSeat(mySeat) || (i == 0 && j == 0))
+                return mySeat;
+            seatCounter++
+            mySeat.label = `${seatCounter}`;
+            return mySeat
+        })
+        return decks.value
+    })
+}
 const useBus = () => {
-    const seats = ref(Array.from({ length: busCapacity.value.deckIndex }, (_, i) =>
-        Array.from({ length: busCapacity.value.seatIndex }, (_, j) => new Seat(String.fromCharCode(65 + i), j))
-    ));
-    // const transposedSeats = defaultSeats[0].map((_, colIndex) => defaultSeats.map(row => row[colIndex]));
-    // const seats = ref<Seat[][]>(window.innerWidth <= 1282 ? transposedSeats : defaultSeats);
-    //Get type of bus from composable to change the default seats array length
     const customClass = (seat?: Seat) => {
         if (!seat)
             return;
         return {
             'mb-1': true,
             'bg-green-lighten-2': seat.isSelected,
+            'border-0': seat.disabled,
         }
     }
-    // const handleResize = () => {
-    //     const WindowSize = window.innerWidth;
-    //     if (WindowSize <= 1020) {
-    //         seats.value = transposedSeats;
-    //     } else {
-    //         seats.value = defaultSeats
-    //     }
-    // };
     const customHover = (seat?: Seat) => {
         if (!seat)
             return;
+        if (seat.isDriver)
+            return 'bg-blue-lighten-4'
         if (seat.isTaken)
             return 'bg-error'
         if (seat.isSelected)
@@ -49,6 +49,8 @@ const useBus = () => {
         if (!seat)
             return "";
         seat.bgColor = 'red-lighten-2'
+        if (seat.isDriver)
+            return 'blue-lighten-2'
         if (seat.isTaken)
             return seat.bgColor;
 
@@ -59,23 +61,25 @@ const useBus = () => {
     const selectSeat = (seat?: Seat) => {
         if (!seat)
             return;
-        const mySeat: Seat = seat;
-        if (mySeat.isTaken) {
-            mySeat.bgColor = 'bg-red-lighten-2';
+        if (seat.isDriver) {
+            seat.bgColor = 'bg-blue-lighten-2';
             return;
         }
-        if (mySeat.isSelected) {
-            mySeat.bgColor = 'bg-white';
+        if (seat.isTaken) {
+            seat.bgColor = 'bg-red-lighten-2';
+            return;
+        }
+        if (seat.isSelected) {
+            seat.bgColor = 'bg-white';
             takenSeats.value--
-            mySeat.isSelected = false
+            seat.isSelected = false
             return;
         }
-        console.log(personCounter.value)
         if (takenSeats.value >= personCounter.value)
             return;
-        mySeat.bgColor = 'bg-green-lighten-1';
+        seat.bgColor = 'bg-green-lighten-1';
         takenSeats.value++
-        mySeat.isSelected = true
+        seat.isSelected = true
     }
 
     return {
@@ -89,7 +93,6 @@ const useBus = () => {
     }
 }
 export {
-    rowIndex,
     useBus,
     takenSeats,
     busCapacity,
