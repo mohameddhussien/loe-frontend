@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer :order="1" width="300" v-model="openNav" expand-on-hover rail>
+    <Drawer v-model="openNav">
         <v-list>
             <v-list-item prepend-avatar="/Ladies_only_events.jpg">
                 <v-list-item-title>
@@ -27,7 +27,7 @@
                     class="font-sans d-md-none d-flex" />
             </v-list>
         </template>
-    </v-navigation-drawer>
+    </Drawer>
     <v-app-bar elevation="0" :order="2" color="rgba(255,255,255,0.5)" class="border">
 
         <v-app-bar-nav-icon data-aos="slide-right">

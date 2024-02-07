@@ -1,7 +1,7 @@
 <template>
     <v-hover #default="{ isHovering, props: hoverProps }">
         <v-btn @click="emits('click')" variant="outlined" v-bind="{ ...hoverProps, ...otherProps, ...$attrs }"
-            :class="{ 'ma-0': true, [`scale-105 ${onHover}`]: isHovering, [`bg-${bgColor}`]: !isHovering, '!border': border }"
+            :class="{ 'ma-0': true, [`scale-105 ${onHover}`]: isHovering, [`bg-${bgColor}`]: !isHovering, '!border !border-black/25': border }"
             :size="size" :href="href" :to="to">
             <v-icon v-if="icon" :icon="icon" />
             <slot v-else />

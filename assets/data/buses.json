@@ -1,0 +1,77 @@
+[
+    {
+        "busNumber": "B001",
+        "busPlate": "ABC123",
+        "busModel": "XYZ",
+        "pickup": "Central Station",
+        "driver": {
+            "id": "D001",
+            "name": "John Doe"
+        },
+        "year": 2018,
+        "otherFeatures": {
+            "hasAC": true
+        },
+        "capacity": 50
+    },
+    {
+        "busNumber": "B002",
+        "busPlate": "DEF456",
+        "busModel": "ABC",
+        "pickup": "Bus Terminal",
+        "driver": {
+            "id": "D002",
+            "name": "Jane Smith"
+        },
+        "year": 2019,
+        "otherFeatures": {
+            "hasAC": true
+        },
+        "capacity": 55
+    },
+    {
+        "busNumber": "B003",
+        "busPlate": "GHI789",
+        "busModel": "PQR",
+        "pickup": "Airport",
+        "driver": {
+            "id": "D003",
+            "name": "Michael Johnson"
+        },
+        "year": 2020,
+        "otherFeatures": {
+            "hasAC": true
+        },
+        "capacity": 45
+    },
+    {
+        "busNumber": "B004",
+        "busPlate": "JKL321",
+        "busModel": "LMN",
+        "pickup": "Hotel",
+        "driver": {
+            "id": "D004",
+            "name": "Sarah Brown"
+        },
+        "year": 2017,
+        "otherFeatures": {
+            "hasAC": true
+        },
+        "capacity": 40
+    },
+    {
+        "busNumber": "B005",
+        "busPlate": "MNO654",
+        "busModel": "EFG",
+        "pickup": "Bus Stop",
+        "driver": {
+            "id": "D005",
+            "name": "David Wilson"
+        },
+        "year": 2019,
+        "otherFeatures": {
+            "hasAC": true
+        },
+        "capacity": 60
+    }
+]

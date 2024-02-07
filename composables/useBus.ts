@@ -9,8 +9,8 @@ const seats = ref<Seat[][]>([]);
 export const createSeatsArray = (notSeat: (seat: Seat) => boolean, busCapacity: SeatIndices) => {
     let seatCounter: number = 0
     seats.value = Array.from({ length: busCapacity.deckIndex }, (_, i) => {
-        const decks = ref<Seat[]>([])
-        decks.value = Array.from({ length: busCapacity.seatIndex }, (_, j) => {
+        let decks = []
+        decks = Array.from({ length: busCapacity.seatIndex }, (_, j) => {
             const mySeat = new Seat(i, j)
             if (notSeat(mySeat) || (i == 0 && j == 0))
                 return mySeat;
@@ -18,7 +18,7 @@ export const createSeatsArray = (notSeat: (seat: Seat) => boolean, busCapacity: 
             mySeat.label = `${seatCounter}`;
             return mySeat
         })
-        return decks.value
+        return decks
     })
 }
 const useBus = () => {

@@ -9,9 +9,7 @@
         <v-row class="gap-x-2">
             <Field v-model="adult.email" label="Email" type="email" hint="Optional" class="min-w-[200px] ma-0" />
             <Field v-model="adult.contact_optional" label="Contact 2" hint="Optional" type="phone_number" class="ma-0" />
-
         </v-row>
-
         <v-row justify="space-evenly">
             <v-col cols="3" md="3" xs="3" sm="3" lg="3" xl="3">
                 <v-checkbox v-model="adult.bus" label="Bus" />
