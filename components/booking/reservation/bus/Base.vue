@@ -1,6 +1,7 @@
 <template>
-    <v-row v-for="(deck, deckIndex) in seats?.value" :key="deckIndex" no-gutters class="gap-1">
-        <v-col cols="auto" v-for="(seat, seatIndex) in deck" :key="seatIndex" v-bind="$attrs" class="d-flex justify-center">
+    <v-row v-for="(deck, deckIndex) in seats?.value" :key="deckIndex" justify-sm="end" no-gutters
+        class="mb-1 gap-1">
+        <v-col cols="auto" align-self="center" v-for="(seat, seatIndex) in deck" :key="seatIndex" v-bind="$attrs">
             <slot :seat="seat" />
         </v-col>
     </v-row>

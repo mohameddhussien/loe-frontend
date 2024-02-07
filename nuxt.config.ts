@@ -29,6 +29,8 @@ export default defineNuxtConfig({
     { path: '~/components/booking/details', prefix: 'BookingDetails', pathPrefix: false },
     { path: '~/components/booking/reservation', prefix: 'Reservation', pathPrefix: false },
     { path: '~/components/booking/reservation/bus', prefix: 'BusReservation', pathPrefix: false },
+    { path: '~/components/booking/reservation/bus/types', prefix: 'Bus', pathPrefix: false },
+    { path: '~/components/booking/reservation/bus/details', prefix: 'Bus', pathPrefix: false },
     { path: '~/components/base', prefix: 'Base', pathPrefix: false },
     { path: '~/components/event components', pathPrefix: false },
     { path: '~/components/global components', pathPrefix: false },

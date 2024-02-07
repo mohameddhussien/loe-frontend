@@ -26,7 +26,6 @@ const useBus = () => {
         if (!seat)
             return;
         return {
-            'mb-1': true,
             'bg-green-lighten-2': seat.isSelected,
             'border-0': seat.disabled,
         }
