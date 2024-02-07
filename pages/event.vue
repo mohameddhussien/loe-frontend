@@ -37,13 +37,13 @@
 </template>
 
 <script setup>
-import { getEventByID } from '~/server/api/getEventByID';
+import { getEventByID } from '@/composables/store/useEvents';
 import { openDialog, personCounter } from '@/composables/dialogActions';
 import { hasToken as authenticated } from '@/composables/store/session';
 import { showSnackbar } from '@/composables/snackBarActions'
 
 
-const event = ref((await getEventByID(useRoute().query.key)).data);
+const event = ref(await getEventByID(useRoute().query.key));
 
 useHead({
     title: event.value.EVENT_NAME,

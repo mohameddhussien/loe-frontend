@@ -35,7 +35,9 @@ const isNotSeat50 = (seat: Seat): boolean => {
     const seatIndex = seatIndices.seatIndex;
 
     const isNotSeat = ref<boolean>(false)
-    isNotSeat.value = notSeat(seat)
+    isNotSeat.value = (deckIndex === 0 && (seatIndex >= 1 && seatIndex < 4)) ||
+        (seatIndex === 2 && deckIndex !== 13) ||
+        ((deckIndex === 6 || deckIndex === 7) && (seatIndex === 3 || seatIndex === 4));
     if (deckIndex === 0 && seatIndex === 4) {
         seat.isTaken = true
         seat.icon = 'mdi-account-multiple'

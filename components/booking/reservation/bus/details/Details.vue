@@ -16,11 +16,18 @@
                     <v-row no-gutters>
                         Pickup Location: {{ bus?.pickup }}
                     </v-row>
+                    <v-row>
+                        <Field></Field>
+                    </v-row>
+                    <v-row class="gap-1" justify="end">
+                        <MyBtn bg-color="primary">Done</MyBtn>
+                        <MyBtn bg-color="error">Close</MyBtn>
+                    </v-row>
                 </v-card-text>
             </v-card>
         </v-col>
         <v-col cols="12" sm="5" md="4" xl="3" class="py-2">
-            <Bus50 />
+            <Bus :capacity="50" />
         </v-col>
     </v-row>
 </template>

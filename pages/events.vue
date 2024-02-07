@@ -37,10 +37,8 @@
 <script setup>
 import { format } from 'date-fns';
 import { hasToken as authenticated } from '@/composables/store/session'
-import { getAllEvents } from '~/server/api/getAllEvents';
+import { events } from '@/composables/store/useEvents';
 import { openDialog } from '@/composables/dialogActions';
-
-const events = ref(await getAllEvents())
 
 const statusMappings = ref([{ 'Sold Out!': 'sold_out.png' }, { 'Coming Soon!': 'coming_soon.png' }])
 const getImageUrl = (status) => {

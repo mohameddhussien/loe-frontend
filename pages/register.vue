@@ -70,7 +70,7 @@
 
 <script setup>
 import { register, loading } from '@/composables/store/session'
-import { getCountryCodes } from '~/server/api/getCountryCodes'
+import { getCountryCodes } from '@/composables/store/useEvents'
 import { useVuelidate } from '@vuelidate/core';
 definePageMeta({
     layout: 'registration',
