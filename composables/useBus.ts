@@ -6,16 +6,22 @@ const busCapacity = ref<SeatIndices>({ deckIndex: 1, seatIndex: 1 })
 //     Array.from({ length: busCapacity.value.seatIndex }, (_, j) => new Seat(String.fromCharCode(65 + i), j))
 // );
 const seats = ref<Seat[][]>([]);
-export const createSeatsArray = (notSeat: ((seat: Seat) => boolean) | undefined, busCapacity: SeatIndices) => {
+const createSeatsArray = (notSeat: ((seat: Seat) => boolean) | undefined, busCapacity: SeatIndices) => {
     let seatCounter: number = 0
     seats.value = Array.from({ length: busCapacity.deckIndex }, (_, i) => {
         let decks = []
         decks = Array.from({ length: busCapacity.seatIndex }, (_, j) => {
             const mySeat = new Seat(i, j)
-            if (notSeat?.(mySeat) || (i == 0 && j == 0))
+            if (notSeat?.(mySeat))
                 return mySeat;
+            //  Driver
+            if (i == 0 && j == 0) {
+                mySeat.label = 'Driver'
+                return mySeat
+            }
             seatCounter++
-            mySeat.label = `${seatCounter}`;
+            mySeat.seatNumber = `${seatCounter}`
+            mySeat.label = mySeat.seatNumber;
             return mySeat
         })
         return decks
@@ -44,42 +50,20 @@ const useBus = (capacity?: number) => {
 
 
 
-    const getBgColor = (seat?: Seat): string => {
+    const getBgColor = (seat?: Seat) => {
         if (!seat)
-            return "";
-        seat.bgColor = 'red-lighten-2'
-        if (seat.isDriver)
-            return 'blue-lighten-2'
+            return;
+        if (seat.isSelected)
+            seat.bgColor = 'green';
+        else
+            seat.bgColor = 'white';
         if (seat.isTaken)
-            return seat.bgColor;
-
-        seat.bgColor = seat.isSelected ? 'green' : 'white';
-        return seat.bgColor
+            seat.bgColor = 'red-lighten-2'
+        if (seat.isDriver)
+            seat.bgColor = 'blue-lighten-2'
+        if (seat.disabled)
+            seat.bgColor = 'transparent'
     };
-
-    const selectSeat = (seat?: Seat) => {
-        if (!seat)
-            return;
-        if (seat.isDriver) {
-            seat.bgColor = 'bg-blue-lighten-2';
-            return;
-        }
-        if (seat.isTaken) {
-            seat.bgColor = 'bg-red-lighten-2';
-            return;
-        }
-        if (seat.isSelected) {
-            seat.bgColor = 'bg-white';
-            takenSeats.value--
-            seat.isSelected = false
-            return;
-        }
-        if (takenSeats.value >= personCounter.value)
-            return;
-        seat.bgColor = 'bg-green-lighten-1';
-        takenSeats.value++
-        seat.isSelected = true
-    }
 
     function isNotSeat13(seat: Seat): boolean {
         const seatIndices: SeatIndices | undefined = {
@@ -104,12 +88,11 @@ const useBus = (capacity?: number) => {
         return isNotSeat.value
     };
     const getDisabledSeats = () => {
-        console.log('Hi')
-        if (capacity === 13){
+        if (capacity === 13) {
             busCapacity.value = { deckIndex: 6, seatIndex: 4 }
             return isNotSeat13
         }
-        if (capacity === 28){
+        if (capacity === 28) {
             busCapacity.value = { deckIndex: 9, seatIndex: 5 }
             return isNotSeat28
         }
@@ -173,7 +156,6 @@ const useBus = (capacity?: number) => {
         customClass,
         customHover,
         getBgColor,
-        selectSeat,
         seats,
         takenSeats,
         getDisabledSeats,
@@ -182,6 +164,7 @@ const useBus = (capacity?: number) => {
 }
 export {
     useBus,
+    createSeatsArray,
     takenSeats,
     busCapacity,
 }

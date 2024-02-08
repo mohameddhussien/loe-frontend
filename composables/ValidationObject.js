@@ -18,5 +18,10 @@ export const useValidationObject = {
         required: helpers.withMessage('Field is required.', required),
         numeric: helpers.withMessage('Numeric values only.', numeric),
         validPhone: helpers.withMessage('Invalid Phone Number', helpers.regex(/01\d{9}$/)),
+    },
+    guestName: {
+        required: helpers.withMessage('Guest Name is required.', required),
+        minLength: helpers.withMessage('Guest must be at least 3 characters.', minLength(3)),
+        maxLength: helpers.withMessage('Guest must be at most 55 characters.', maxLength(55))
     }
 };

@@ -1,6 +1,7 @@
 <template>
     <BusReservationBase :seats="busActions.seats" #default="{ seat }">
-        <BusReservationSeat :is-not-seat="disabledSeats" :seat="seat" />
+        <BusReservationSeat @selected-seat="(mySeat) => $emit('selected-seat', mySeat)" :is-not-seat="disabledSeats"
+            :seat="seat" />
     </BusReservationBase>
 </template>
 
@@ -10,7 +11,6 @@ const props = defineProps({
 })
 const busActions = useBus(props.capacity)
 const disabledSeats = busActions.getDisabledSeats();
-console.log('asdas')
 createSeatsArray(disabledSeats, busCapacity.value)
 
 </script>
