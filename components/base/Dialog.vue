@@ -1,10 +1,10 @@
 <template>
-    <v-dialog :persistent="persistent" v-model="opened" :fullscreen="fullscreen" :width="width"
-        :transition="`${transition}-transition`">
+    <v-dialog :persistent="persistent" :model-value="dialogOpen" @update:model-value="emits('update:modelValue', $event)"
+        :fullscreen="fullscreen" :width="width" :transition="`${transition}-transition`">
         <v-card :color="color" :elevation="elevate">
             <v-card-title>
                 <slot name="title">
-                    <v-btn variant="text" :ripple="false" icon="mdi-close" @click="emits('close');" />
+                    <v-btn variant="text" :ripple="false" icon="mdi-close" @click="emits('update:modelValue', $event)" />
                     <SpecialTextDesign :before="title" :to-be-decorated="decoratedText"
                         color="before:bg-pink-500 bg-pink-200" />
                 </slot>
@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-const emits = defineEmits(['close'])
+const emits = defineEmits(['@update:model-value'])
 const props = defineProps({
     dialogOpen: Boolean,
     message: String,
@@ -41,11 +41,6 @@ const props = defineProps({
     icon: { type: String, default: '' },
 
 })
-const opened = ref(props.dialogOpen);
-
-watchEffect(() => {
-    opened.value = props.dialogOpen;
-});
 </script>
 
 <style lang="scss" scoped></style>

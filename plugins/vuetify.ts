@@ -21,19 +21,19 @@ function colorToGrey(color: string) {
     return `rgba(${grey}, ${grey}, ${grey}, 1)`;
 }
 const myLightColors: Record<string, string> = {
-    'pink-accent-4': colors.deepOrange.accent4,
-    'pink-accent-3': colors.deepOrange.accent3,
-    'pink-accent-2': colors.deepOrange.accent2,
-    'pink-accent-1': colors.deepOrange.accent1,
-    'pink-lighten-5': colors.deepOrange.lighten5,
-    'pink-lighten-4': colors.deepOrange.lighten4,
-    'pink-lighten-3': colors.deepOrange.lighten3,
-    'pink-lighten-2': colors.deepOrange.lighten2,
-    'pink-lighten-1': colors.deepOrange.lighten1,
-    'pink-darken-4': colors.deepOrange.darken4,
-    'pink-darken-3': colors.deepOrange.darken3,
-    'pink-darken-2': colors.deepOrange.darken2,
-    'pink-darken-1': colors.deepOrange.darken1,
+    'pink-accent-4': colors.orange.accent4,
+    'pink-accent-3': colors.orange.accent3,
+    'pink-accent-2': colors.orange.accent2,
+    'pink-accent-1': colors.orange.accent1,
+    'pink-lighten-5': colors.orange.lighten5,
+    'pink-lighten-4': colors.orange.lighten4,
+    'pink-lighten-3': colors.orange.lighten3,
+    'pink-lighten-2': colors.orange.lighten2,
+    'pink-lighten-1': colors.orange.lighten1,
+    'pink-darken-4': colors.orange.darken4,
+    'pink-darken-3': colors.orange.darken3,
+    'pink-darken-2': colors.orange.darken2,
+    'pink-darken-1': colors.orange.darken1,
     'pink-darken': colors.red.base
 }
 const generateGreyColors = (lightColors: Record<string, string>): Record<string, string> => {

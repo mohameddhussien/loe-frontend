@@ -9,6 +9,7 @@ class Seat {
     isTaken: boolean;
     row: number;
     column: number;
+    seatNumber: string;
     seatType: 'standard' | 'premium' | 'vip';
 
     constructor(row: number, column: number, seatType: 'standard' | 'premium' | 'vip' = 'standard') {
@@ -19,11 +20,17 @@ class Seat {
         this.row = row;
         this.column = column;
         this.label = '';
+        this.seatNumber = this.label;
         this.icon = isDriver ? 'mdi-bus' : '';
         this.isSelected = false;
         this.isDriver = isDriver;
         this.isTaken = Math.random() < 0.5;
         this.seatType = seatType;
+    }
+    public convertToTakenSeat(guestName: string) {
+        this.isTaken = true
+        this.label = this.seatNumber + ': ' + guestName
+        this.bgColor = 'error'
     }
 }
 export {

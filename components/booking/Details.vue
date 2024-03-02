@@ -1,5 +1,5 @@
 <template>
-    <BaseDialog width="10000" :dialog-open="opened" @close="emits('cancel')" transition="dialog-bottom" :fullscreen="true"
+    <BaseDialog width="10000" v-model="opened" @close="emits('cancel')" transition="dialog-bottom" :fullscreen="true"
         color="pink-accent-2">
         <template #title>
             <v-toolbar color="transparent">
