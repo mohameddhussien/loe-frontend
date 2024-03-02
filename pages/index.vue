@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import { events } from '@/composables/store/events';
+import { useEvents } from '@/composables/store/events'
 definePageMeta({
   // set custom layout
   layout: 'default'
@@ -57,6 +57,9 @@ definePageMeta({
 useHead({
   title: 'Ladies only events',
 })
+const { getAllEvents } = useEvents()
+const { data: events } = await getAllEvents();
+
 const justAnnouncedEvents = ref(events.value.filter(event => {
   const status = event.STATUS.toString().toLowerCase();
   return status === 'just announced!';

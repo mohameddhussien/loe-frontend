@@ -69,8 +69,8 @@
 </template>
 
 <script setup>
+import { useEvents } from '@/composables/store/events'
 import { register, loading } from '@/composables/store/session'
-import { getCountryCodes } from '~/server/api/getCountryCodes'
 import { useVuelidate } from '@vuelidate/core';
 definePageMeta({
     layout: 'registration',
@@ -91,8 +91,9 @@ const registrationForm = reactive({
     phone_number: ''
 })
 let $v = '';
+const { getCountryCodes } = useEvents()
+const { data: countryCodes } = await getCountryCodes();
 
-const countryCodes = await getCountryCodes();
 const handleSubmit = async () => {
     $v = useVuelidate(useValidationObject, registrationForm)
     //  Validate form!!

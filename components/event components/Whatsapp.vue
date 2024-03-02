@@ -13,9 +13,9 @@
     </v-menu>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 const props = defineProps({
-    event: Object,
+    event: Object as PropType<EventItem>,
 })
 const organizers = ref([
     { name: "Dalia", phone: "+201001016773" },

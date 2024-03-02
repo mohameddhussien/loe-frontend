@@ -48,8 +48,8 @@
                 <v-switch @click="toggleTheme" v-model="theme.global.current.value.dark"
                     class="align-self-center ma-1 d-none d-md-flex" inset color="white" hide-details />
                 <my-btn @click="openSearch = true" icon="mdi-calendar-search" size="small" />
-                <my-btn to="/register" v-if="!authenticated" class="d-md-flex d-none">Signup</my-btn>
-                <my-btn to="/login" v-if="!authenticated" class="d-md-flex d-none">Login</my-btn>
+                <my-btn to="/auth/register" v-if="!authenticated" class="d-md-flex d-none">Signup</my-btn>
+                <my-btn to="/auth/login" v-if="!authenticated" class="d-md-flex d-none">Login</my-btn>
                 <my-btn v-if="authenticated" @click="async () => await logout()"
                     class="d-md-flex d-none !ma-1">Logout</my-btn>
             </v-card-actions>

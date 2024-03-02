@@ -12,13 +12,13 @@
                             {{ isLogin ? "Welcome Back!" : 'Hello There!' }}</v-card-title>
                         <v-card-subtitle class="!flex !items-center !justify-center !font-semibold mb-4">
                             {{ isLogin ? "Sign in effortlessly to access your account." :
-                                "Begin your adventure with our quick registration." }}
+                        "Begin your adventure with our quick registration." }}
                         </v-card-subtitle>
                         <v-card-text>
                             <slot name="fields" :isLogin="isLogin"></slot>
                         </v-card-text>
                         <v-footer class="d-flex flex-column justify-center">
-                            <NuxtLink :to="isLogin ? '/register' : '/login'">
+                            <NuxtLink :to="'/auth' + isLogin ? '/register' : '/login'">
                                 <v-btn density="compact" variant="text" rounded
                                     class="hover:bg-[#F06292]  hover:border-[#F06292] hover:text-white">
                                     {{ isLogin ? 'Create an Account' : 'Already have an account?' }}

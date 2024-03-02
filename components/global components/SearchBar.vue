@@ -22,8 +22,12 @@
     </BaseDialog>
 </template>
 
-<script setup>
-import { eventNames } from '@/composables/store/events'
+<script lang="ts" setup>
+import { useEvents } from '@/composables/store/events'
+const eventNames = ref()
+const { getAllEvents } = useEvents()
+const { data: events } = await getAllEvents();
+eventNames.value = events.value?.map((event: any) => event.EVENT_NAME);
 const emits = defineEmits(['close'])
 const props = defineProps({
     openSearchBar: Boolean,

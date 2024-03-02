@@ -34,13 +34,14 @@
     </v-container>
 </template>
 
-<script setup>
+<script  setup>
+import { useEvents } from '@/composables/store/events'
 import { format } from 'date-fns';
 import { hasToken as authenticated } from '@/composables/store/session'
-import { getAllEvents } from '~/server/api/getAllEvents';
 import { openDialog } from '@/composables/dialogActions';
 
-const events = ref(await getAllEvents())
+const { getAllEvents } = useEvents()
+const { data: events } = await getAllEvents();
 
 const statusMappings = ref([{ 'Sold Out!': 'sold_out.png' }, { 'Coming Soon!': 'coming_soon.png' }])
 const getImageUrl = (status) => {
